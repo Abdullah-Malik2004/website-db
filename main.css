@@ -1,0 +1,364 @@
+*
+{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    border: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+
+#navigation {
+    background-color: #2F4550;
+    height: 130px;
+    font-size: 1.2rem;
+    color: #8490dd;
+    font-weight: 750;
+    display: flex;
+    align-items: center;
+}
+
+
+.list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+.list li {
+    margin: 0 60px;
+    margin-top: 10px; 
+}
+
+.list li a 
+{
+    color: #8490dd;
+    position: relative;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+}
+
+
+
+.list li 
+{
+    position: relative; 
+}
+
+.list li a.active,
+.list li a:hover 
+{
+    color: #6eddff;
+}
+
+.list li a.active::after,
+.list li a:hover::after 
+{
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -2px; /* Adjust the distance of the line from the text */
+    left: 50%;
+    width: 30px; /* Adjust the width of the line */
+    height: 2px; /* Adjust the height of the line */
+    background-color: #FFC107;
+    transform: translateX(-50%);
+}
+
+
+/*
+.list li a:hover,
+
+{
+    color: #FFC107; 
+    font-weight: 700; 
+    transition: 0.3s ease;
+}
+
+*/
+
+
+#hero {
+    height: 800px;
+    background-color: #272f61;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#hero h6,
+#hero h2 {
+    text-align: center; /* Center text within each heading */
+    
+        
+}
+
+h2
+{
+    font-size: 50px;
+}
+h6
+{
+    color: #272f61;
+        text-shadow:
+         -1px -1px 0 #000,  
+          1px -1px 0 #000,
+          -1px 1px 0 #000,
+           1px 1px 0 #000;
+      
+    font-size: 24px;
+}
+
+
+
+/*
+.list li a.active::after
+{
+    content: "";
+    width: 30%;
+    height: 2px;
+    background-color: #040c41;
+    bottom: -4px;
+    left: 20px;
+}
+
+
+
+.list a
+{
+    color: #040c41;
+    list-style: none;
+    text-decoration: none;
+    
+}
+.list li:hover div,
+.list li:hover .sign
+{
+    color: #B6BCD0;
+    transition: 0.3s ease;
+}
+
+.list li a.main::after
+{
+    content: "";
+    width: 30%;
+    height: 2px;
+    background-color: #040c41;
+    
+    bottom: -4px;
+    left: 40px;
+}
+*/
+
+/*General Logo part*/
+.border 
+{
+    padding: 4px;
+    border: 2px solid transparent;
+    display: inline-block; 
+    transition: border 0.1s ease;
+    border-radius: 8%;
+}
+
+.border:hover 
+{
+    border: 2px solid white;
+    border-radius: 13%;
+}
+
+
+/*Border Logo part*/
+.border_logo 
+{
+    border: 4px solid transparent;
+    border-radius: 50%;
+}
+
+.border_logo:hover 
+{
+    border: 4px solid white;
+    border-radius: 50%;
+    transition: border 0.1s ease;
+}
+
+.border_logo:not(:hover) 
+{
+    border: 4px solid transparent;
+    border-radius: 50%;
+    transition: border 0.1s ease;
+}
+
+/*search bar*/
+.searchBar
+{
+    display: flex;
+    justify-content: space-evenly;
+    width: 600px;
+    height: 40px;
+    border-radius: 4px;
+}
+.All
+{
+    background-color: #B6BCD0;
+    width: 50px;
+    text-align: center;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    font-size: 1rem;
+    border: none;
+}
+.bar 
+{
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+    background-color: #737880;
+    color: #03092b; 
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    outline: 2px solid transparent; /* Initial transparent outline */
+    transition: outline 0.5s ease;
+}
+
+.bar:focus 
+{
+    caret-color: #040c41; 
+    border: 2px solid #242b03;
+    outline: 1.2px solid #03092b;
+    transition: outline 0.5s ease;
+    box-shadow: none;
+}
+
+.bar::placeholder 
+{
+    color: #03092b; 
+}
+
+.search_icon
+{
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*Sign in */
+.hello
+{
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+.in 
+{
+    font-size: 1rem;
+}
+.cart
+{
+    width: 100px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Ctext
+{
+    font-weight: 500;
+    padding-left: 10px;
+}
+.cart i
+{
+    font-size: 30px;
+}
+
+/* small nav*/
+.DCS
+{
+    margin: 0 auto;
+    font-size: 18px;
+    background-color: #78808d;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #c3c8da;
+}
+.navSmall
+{
+    width: 30%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.deals
+{
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: 50px;
+}
+
+@keyframes slide  
+{
+    from    
+    {
+        transform: translateX(0);
+    }
+    to
+    {
+        transform: translateX(-100%);
+    }
+}
+
+.logos 
+{
+    overflow: hidden;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.logos:hover .logoslide
+{
+    animation-play-state: paused;
+}
+.logoslide 
+{
+    
+    cursor: pointer;
+    animation: slide 8s infinite linear ;  
+    display: inline-block; 
+}
+
+.T 
+{
+    display: inline-block;
+    margin-right: 20px; /* Adjust margin as needed for spacing between items */
+}
+
+
+.T p 
+{
+    margin-top: 10px;
+    margin-right: 100px;
+    margin-left: 60px;
+    color: #737880;
+    font-weight: 800;   
+    display: block; /* Make sure both img and p are on separate lines */
+}
+
+
+
+
+.copy
+{
+    display: flex;
+    text-align: center;
+    color: #737880;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    background-color: #03092b;
+    height: 80px;
+    width: 100%;
+}
