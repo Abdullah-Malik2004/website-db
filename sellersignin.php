@@ -17,12 +17,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Passwords match, user authenticated
             $login=true;
             session_start();
-            $_SESSION['loggedin'] = true;
+            $_SESSION['sloggedin'] = true;
             $_SESSION['email'] = $email;
             $_SESSION['fid'] = $fid;
             $_SESSION['fname'] = $fname;
             $_SESSION['lname'] = $lname;
-            header("location: main.php");
+            header("location: seller.php");
         } else {
             // Passwords do not match, authentication failed
             $showerror="Passwords do not match, authentication failed";

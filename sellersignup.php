@@ -92,6 +92,8 @@
                 <input type="submit" value="Back" onclick='BackSec2()'>
   
             </div>
+
+
             
                 
             
@@ -182,18 +184,6 @@
             }
         }
 
-
-
-        /*function goTo(sectionfrom, sectionto) 
-
-        {
-            var currentSection = document.getElementById(sectionfrom);
-            var nextSection = document.getElementById(sectionto);
-            
-            alert(currentSection.outerHTML);
-        }
-
-        */
         function changesection(sectionFrom,sectionTo){
             
             sectionFrom.style.display='none';
@@ -226,8 +216,7 @@
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $fname = filter_input(INPUT_POST,"fname",FILTER_SANITIZE_SPECIAL_CHARS);
         $lname = filter_input(INPUT_POST,"lname",FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST,"password",FILTER_SANITIZE_SPECIAL_CHARS); // This is the entered password
-        // Hash the password using a secure hashing algorithm (e.g., bcrypt)
+        $password = filter_input(INPUT_POST,"password",FILTER_SANITIZE_SPECIAL_CHARS);
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $email = filter_input(INPUT_POST,"username",FILTER_SANITIZE_SPECIAL_CHARS);
         $phone = filter_input(INPUT_POST,"Phone",FILTER_SANITIZE_SPECIAL_CHARS);
