@@ -6,27 +6,29 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email= $_POST['email'];
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare("SELECT sellerID,fname,lname,password FROM seller WHERE email = ?");
+    $stmt = $conn->prepare("SELECT sellerID,fname,lname,password,status FROM seller WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->bind_result($fid,$fname,$lname,$hashed_password);
+    $stmt->bind_result($fid,$fname,$lname,$hashed_password,$status);
 
     if ($stmt->fetch()) {
         // User found, verify the password
         if (password_verify($password, $hashed_password)) {
-            // Passwords match, user authenticated
-            $login=true;
-            session_start();
-            $_SESSION['sloggedin'] = true;
-            $_SESSION['email'] = $email;
-            $_SESSION['fid'] = $fid;
-            $_SESSION['fname'] = $fname;
-            $_SESSION['lname'] = $lname;
-            header("location: seller.php");
-        } else {
-            // Passwords do not match, authentication failed
-            $showerror="Passwords do not match, authentication failed";
-        }
+            if($status=='approved'){
+                // Passwords match, user authenticated
+                $login=true;
+                session_start();
+                $_SESSION['sloggedin'] = true;
+                $_SESSION['email'] = $email;
+                $_SESSION['fid'] = $fid;
+                $_SESSION['fname'] = $fname;
+                $_SESSION['lname'] = $lname;
+                header("location: seller.php");
+                } else {
+                // Passwords do not match, authentication failed
+                $showerror="Passwords do not match, authentication failed";
+                }
+            }
     } else {
         // User not found, authentication failed
         $showerror="User not found, authentication failed";
