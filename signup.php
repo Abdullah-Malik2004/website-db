@@ -145,7 +145,7 @@
 
 
 
-    use PHPMailer\PHPMailer\PHPMailer;
+    /*use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
 
@@ -187,7 +187,7 @@
 
         $mail->send();
         
-    }
+    }*/
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $fname = filter_input(INPUT_POST,"fname",FILTER_SANITIZE_SPECIAL_CHARS);
@@ -209,7 +209,7 @@
         if($result){
             
             mysqli_query($conn, $sql);
-            sendemail_verify("$fname","$lname","$email","$verify_token");
+            //sendemail_verify("$fname","$lname","$email","$verify_token");
             echo "<script>
              alert('Registration succesfull! Please verify your e-mail address')
               </script>";
