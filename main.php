@@ -113,24 +113,24 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                 <img src="Template1.png"  >
                 <p>GAMES</p>
             </div>
-            <div class="T">
+            <div class="T"  onclick="openCategory('clothes')">
                 <img src="Template2.png"  >
                 <p>CLOTHINGS</p>
             </div>
             <div class="T">
-                <img src="Template3.png"  >
+                <img src="Template3.png" onclick="openCategory('electronics')" >
                 <p>ELECTRONICS</p>
             </div>
             <div class="T">
-                <img src="Template4.png"  >
+                <img src="Template4.png" onclick="openCategory('newBook')" >
                 <p>BOOKS</p>
             </div>
             <div class="T">
-                <img src="Template5.png"  >
+                <img src="Template5.png" onclick="openCategory('food')" >
                 <p>FOOD</p>
             </div>
             <div class="T">
-                <img src="Template6.png"  >
+                <img src="Template6.png" onclick="openCategory('film')" >
                 <p>FILMS</p>
             </div>
         </div>    
@@ -167,7 +167,8 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         function openCategory(category) 
         {
             // Add logic to handle the click event for the specified category
-            alert("You clicked on " + category + "!");
+            var newPageURL = category +'.php';
+            window.open(newPageURL,'_self');
             // You can replace the console.log with your desired action
             // For example, navigate to a specific page or display content related to the category
         }

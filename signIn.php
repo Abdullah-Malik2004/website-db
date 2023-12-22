@@ -1,6 +1,9 @@
 <?php
 $login=false;
 $showerror=false;
+session_start();
+session_unset();
+session_destroy();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     include 'database.php';
     $email= $_POST['email'];

@@ -1,6 +1,8 @@
 <?php
     include('database.php');
-    
+    session_start();
+    session_unset();
+    session_destroy();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -211,7 +213,7 @@
             mysqli_query($conn, $sql);
             //sendemail_verify("$fname","$lname","$email","$verify_token");
             echo "<script>
-             alert('Registration succesfull! Please verify your e-mail address')
+             alert('Registration succesfull!')
               </script>";
            
         }
@@ -220,6 +222,7 @@
             echo "<script>
             alert('Your e-mail or phone number is already taken. Sign up again')
             </script>";
+            
         }
         
     

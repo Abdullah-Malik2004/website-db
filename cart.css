@@ -1,0 +1,62 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+}
+
+body
+{
+    background-color: #2F4550;
+    color: #8490dd;
+    font-size: 30px;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    
+        
+    overflow: scroll;
+}
+
+/* For WebKit browsers (Chrome, Safari, Opera) */
+body::-webkit-scrollbar {
+    width: 0; /* Hide the scrollbar width */
+}
+
+/* For WebKit browsers (Chrome, Safari, Opera) */
+body::-webkit-scrollbar-thumb {
+    background-color: transparent; /* Hide the scrollbar thumb */
+}
+
+
+
+footer 
+{
+    bottom: 0;
+    text-align: center;
+    color: #737880;
+    justify-content: center;
+    align-items: center;
+    background-color: #03092b; /* Match the background color of the body */
+    height: 80px;
+    width: 100%;
+}
+
+
+.itemPicture div 
+{
+    height: 300px;
+    width: 100%;
+    background-color: #03092b;
+    display: block;
+    text-align: left;
+    margin: 20px 30px;
+}
+
+.itemPicture img 
+{
+    padding-top: 45px;
+    padding-left: 30px;
+    width: 400px; /* Set the desired width */
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+}

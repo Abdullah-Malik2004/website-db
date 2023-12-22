@@ -1,6 +1,9 @@
 <?php
 $login=false;
 $showerror=false;
+session_start();
+session_unset();
+session_destroy();
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     include 'database.php';
     $email= $_POST['email'];
@@ -24,11 +27,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 $_SESSION['fname'] = $fname;
                 $_SESSION['lname'] = $lname;
                 header("location: seller.php");
-                } else {
+                }
+                else if($status=='pending'){
+                    // Passwords do not match, authentication failed
+                    $showerror="Your seller account request is " .$status;
+                    } 
+                else{
+                    $showerror="Your seller account request has been " .$status;
+                }
+
+            }
+            else {
                 // Passwords do not match, authentication failed
                 $showerror="Passwords do not match, authentication failed";
                 }
-            }
     } else {
         // User not found, authentication failed
         $showerror="User not found, authentication failed";

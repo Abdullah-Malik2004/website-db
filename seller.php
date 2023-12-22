@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 if(!isset($_SESSION['sloggedin']) || $_SESSION['sloggedin']!=true){
     header("location:sellersignin.php");

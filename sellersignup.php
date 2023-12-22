@@ -1,5 +1,8 @@
 <?php
     include('database.php');
+    session_start();
+    session_unset();
+    session_destroy();
 ?>    
 <!DOCTYPE html>
 <html lang="en">
@@ -221,32 +224,23 @@
         $email = filter_input(INPUT_POST,"username",FILTER_SANITIZE_SPECIAL_CHARS);
         $phone = filter_input(INPUT_POST,"Phone",FILTER_SANITIZE_SPECIAL_CHARS);
         
-        if(empty($password)){
-            echo"Please neter password";
-        }
-        else if(empty($fname)){
-            echo"Pleaase enter name";
-        }
-        else if(empty($lname)){
-            echo"Please enter lastname";
-        }
-        else if(empty($email)){
-            echo"Please enter email";
-        }
-        else if(empty($phone)){
-            echo"Please enter phone";
+    
+        $sql="INSERT INTO seller (fname,lname,email,password,address,phoneno) 
+        VALUES ('$fname','$lname','$email','$hashedPassword','A-354','$phone')";
+        
+        if(mysqli_query($conn, $sql)){
+            echo"<script>
+             alert('Seller account request has been sent! Waiting for approval')
+             </script>";
+             
         }
         else{
-            $sql="INSERT INTO seller (fname,lname,email,password,address,phoneno) 
-            VALUES ('$fname','$lname','$email','$hashedPassword','A-354','$phone')";
-            
-            if(mysqli_query($conn, $sql)){
-                echo"You are now registered";}
-            else{
-                echo("E-mail address or phone number already taken");
-            }
-            
+            echo "<script>
+            alert('Your e-mail or phone number is already taken. Sign up again')
+            </script>";
         }
+        
+        
         
     }
     
