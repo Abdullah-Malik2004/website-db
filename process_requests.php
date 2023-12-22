@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     
 
-    header("Location: admin.php"); // Redirect back to the admin screen
+    header("Location: AdminReq.php"); // Redirect back to the admin screen
     //exit();
 }
 ?>

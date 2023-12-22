@@ -26,13 +26,44 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION['fname'] = $fname;
             $_SESSION['lname'] = $lname;
             header("location: main.php");
+            exit;
         } else {
             // Passwords do not match, authentication failed
             $showerror="Passwords do not match, authentication failed";
         }
     } else {
-        // User not found, authentication failed
-        $showerror="User not found, authentication failed";
+        //$stmt->close();
+        $stmt = $conn->prepare("SELECT AdminID,fname,lname,password FROM administrator WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->bind_result($aid,$fname,$lname,$hashed_password);
+
+        if ($stmt->fetch()) {
+            // User found, verify the password
+            if (password_verify($password, $hashed_password)) {
+                // Passwords match, user authenticated
+                $login=true;
+                session_start();
+                $_SESSION['aloggedin'] = true;
+                $_SESSION['email'] = $email;
+                $_SESSION['aid'] = $aid;
+                $_SESSION['fname'] = $fname;
+                $_SESSION['lname'] = $lname;
+                header("location: admin.php");
+                exit;
+            } else {
+                // Passwords do not match, authentication failed
+                echo'<script>
+                alert("Passwords do not match, authentication failed")
+                </script>';
+            }
+        }
+        else{
+           echo "<script>
+           alert('User not found, authentication failed')
+           </script>";
+        }
+
     }
 }
 ?>
@@ -50,24 +81,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 </head>
 <body>
     
-    <?php
-    if($login){
-        echo'<div class="alert alert-success alert dismissable fade show" role = "alert">
-        <strong>Success!</strong>  You are logged in
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span
-        </button>
-        </div>';
-    }  
-    if($showerror){
-        echo'<div class="alert alert-danger alert dismissable fade show" role = "alert">
-        <strong>Error!</strong> '.$showerror.'
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span
-        </button>
-        </div>';
-    }  
-    ?>
 
     <a href="main.php">
         <div class = 'logobar'>
@@ -101,40 +114,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <a href="sellersignin.php">Sign In to your business account!</a>
     </div>
 
-<script>
-    function authenticateUser() {
-        event.preventDefault();
-        var email = document.getElementById('email').value;
-        var password = document.getElementById('password').value;
-
-        // Make an AJAX request to authenticate the user
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    // Successful response, check the result
-                    var result = JSON.parse(xhr.responseText);
-                    if (result.authenticated) {
-
-                        // Authentication successful, you can redirect or perform other actions
-                        alert("Authentication successful. Redirecting to dashboard.");
-                        document.getElementById('signinForm').submit();
-                    } else {
-                        // Authentication failed
-                        alert("Authentication failed. Please check your credentials.");
-                    }
-                } else {
-                    // Handle error
-                    alert("Error authenticating user.");
-                }
-            }
-        };
-
-        xhr.open("POST", "authenticate_user.php", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.send("email=" + encodeURIComponent(email) + "&password=" + encodeURIComponent(password));
-    }
-</script>
 
     
 </body>
