@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION['cid'] = $cid;
             $_SESSION['fname'] = $fname;
             $_SESSION['lname'] = $lname;
-            header("location: main.php");
+            header("location: seller.php");
         } else {
             // Passwords do not match, authentication failed
             $showerror="Passwords do not match, authentication failed";
