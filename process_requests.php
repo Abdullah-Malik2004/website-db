@@ -16,6 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     header("Location: AdminReq.php"); // Redirect back to the admin screen
-    //exit();
+    exit();
 }
 ?>

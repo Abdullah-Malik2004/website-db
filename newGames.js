@@ -1,8 +1,11 @@
 var game = ['assissin', 'fc5', 'jedi', 'wwz'];
 
-function addToCart(gameId, path) 
+function addToCart(productid) 
 {
-    var gameDiv = document.getElementById(gameId);
+    document.getElementById('AddToCartForm'+productid).submit();
+    alert('Clicled');
+
+    /*var gameDiv = document.getElementById(gameId);
     var addedStateKey = gameId + "a";  // Using a consistent key for added state
 
     if (gameDiv) {
@@ -28,7 +31,7 @@ function addToCart(gameId, path)
     }
 
     console.log(gameId);
-    console.log(localStorage.getItem(gameId));
+    console.log(localStorage.getItem(gameId));*/
 }
 
 window.addEventListener('load', function () {

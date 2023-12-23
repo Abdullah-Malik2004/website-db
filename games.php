@@ -5,6 +5,35 @@
         header("location:signIn.php");
         exit;
     }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $productid = $_POST['action'];
+        $customerid = $_SESSION['cid'];
+
+        $sql = "INSERT into cart values($customerid,$productid,1)";
+        $result = mysqli_query($conn,$sql);
+
+        if($result){
+            
+            mysqli_query($conn, $sql);
+            
+            echo "<script>
+             alert('Added to cart succesfully!')
+              </script>";
+           
+        }
+        else{
+            
+            echo "<script>
+            alert('Already added to cart')
+            </script>";
+            
+        }
+        
+
+        
+        
+        
+    }
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +50,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
+    <script src="newGames.js">
+    </script>
 
 </head>
 <body class="body">
@@ -61,108 +91,56 @@
         $offset = ($current_page - 1) * $productsPerPage;
 
         // Query to retrieve products with pagination
-        $sql = "SELECT * FROM product LIMIT $offset, $productsPerPage";
+        $sql = "SELECT * FROM product where categoryid=1 LIMIT $offset, $productsPerPage";
         $result = $conn->query($sql);
 
     if($result->num_rows>0){
 
         while($row = $result->fetch_assoc()){
 
-    echo '<div class="f2 " >';
-        echo '<div class="assissin" id="assissin">';
-        echo '<img src="' . $row["image_data"] . '" class="im" >';
-        echo'<div class="textcontainer">';
-            echo'<h3 onclick="addToCart("assissin", "games/assasin.jpg")">'.$row["Name"].'</h3>';
+            echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="games.php">';
+            echo '<div class="f2" >';
+            echo '<div class="assissin" id="assissin">';
+            echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px; height: 372px;" >';
+            echo '<div class="textcontainer">';
+            //echo '<input type="submit" name="request_id" value="' . $row['ProductID'] . '">';
+            echo '<h3 onclick="addToCart(' . $row['ProductID'] . ')">' . $row["Name"] . '</h3>';
             echo '<div class="cc">';
-                echo '<h5 onclick="addToCart("assissin", "games/assasin.jpg")">Add to Cart</h5>';
-                echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart("assissin", "games/assasin.jpg")"></i>';
-            echo '</div>
-        </div>
-        <div class="price">
-            <h4><br>'.$row["price"].'</h4>
-        </div>
-    </div>';
+            echo '<input type="submit" name="action" value="' . $row['ProductID'] . '">Add To Cart';
+            echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(' . $row['ProductID'] . ')"></i>';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="price">';
+            echo '<h4><br>' . $row["price"] . '</h4>';
+            echo '</div>';
+            echo '</div>'; // Close the div with class "assissin"
+            echo '</div>'; // Close the div with class "f2"
+            echo '</form>';
+        
+        
         }
+        $totalPages = ceil($totalProducts / $productsPerPage);
+       
+    echo '<div class="pagination">';
+    for ($i = 1; $i <= $totalPages; $i++) {
+        echo '<a href="?page=' . $i . '" >' . $i . '</a>';
+    }
+    echo '</div>';
 
+    }
+
+    else{
+        echo'No products for this category';
     }
        
     ?>
 
-        <div class="assissin">
-            <img src="games/fc5.jpg" class="im">
-            <div class="textcontainer" id="fc5" >
-                <h3 onclick="addToCart('fc5', 'games/fc5.jpg')">Far Cry 5</h3>
-                <div class="cc">
-                        <h5 onclick="addToCart('fc5', 'games/fc5.jpg')">Add to Cart</h5>
-                        <i class="fa-solid fa-cart-shopping" onclick="addToCart('fc5', 'games/fc5.jpg')"></i>
-                </div>
-            </div>
-            <div class="price">
-                <h4><br>$19.99</h4>
-            </div>
-        </div>
-    </div>
-
-    <div class="s2 ">
-        <div class="assissin">
-            <img src="games/wwz.jpg" class="im"  >
-            <div class="textcontainer" id="wwz">
-                <h3 onclick="addToCart('wwz', 'games/wwz.jpg')">World War Z</h3>
-                    <div class="cc">
-                        <h5 onclick="addToCart('wwz', 'games/wwz.jpg')">Add to Cart</h5>
-                        <i class="fa-solid fa-cart-shopping" onclick="addToCart('wwz', 'games/wwz.jpg')"></i>
-                    </div>
-            </div>
-            <div class="price">
-                <h4><br>$39.99</h4>
-            </div>
-            
-        </div>
-            
-        <div class="assissin">
-            <img src="games/jedi.jpg" class="im">
-            <div class="textcontainer" id="jedi">
-                <h3 onclick="addToCart('jedi', 'games/jedi.jpg')">Star Wars: Jedi Survivor</h3>
-                    <div class="cc">
-                        <h5 onclick="addToCart('jedi', 'games/jedi.jpg')">Add to Cart</h5>
-                        <i class="fa-solid fa-cart-shopping" onclick="addToCart('jedi', 'games/jedi.jpg')"></i>
-                    </div>
-            </div>
-            <div class="price">
-                <h4><br>$49.71</h4>
-            </div>
-        </div>
-    </div>
-
-    <style>
-            .cc 
-            {
-                display: flex;
-            }
-            .fa-cart-shopping
-            {
-                margin-top: 10px;
-            }
-            h5
-            {
-                margin-top: 10px;
-                margin-right: 10px;
-            }
-            .price 
-            {
-                font-size: 27px;
-                text-align: center;
-                margin-top: -10px; /* Adjust the margin as needed */
-            }
-        </style>
-
-<div id="itemPicture" class="item-picture-container">
-    <!-- Item pictures will be dynamically added here -->
-    </div>
+        
 
 
-    <script src="newGames.js">
-    </script>
+
+
+    
 
 
     <footer class="copy" id="footer">

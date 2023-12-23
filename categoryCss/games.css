@@ -22,10 +22,19 @@ h1
 }
 
 .body
-{
+{   
+    text-align: center;
     background-color: #2F4550;
     color: #8490dd;
     font-size: 30px;
+}
+
+.pagination:hover
+{
+    
+    color: #6d0a0a;
+    transition: 0.3s ease;
+    
 }
 
 .assissin
@@ -58,6 +67,32 @@ h1
     display: inline-block;
     vertical-align: middle;
 }
+.cc 
+{
+    display: flex;
+}
+.fa-cart-shopping
+{
+    margin-top: 10px;
+}
+h5
+{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+.price 
+{
+    
+    font-size: 27px;
+    text-align: center;
+    margin-top: -10px; /* Adjust the margin as needed */
+}
+h4
+{
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
 
 
 /*

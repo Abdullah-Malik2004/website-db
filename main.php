@@ -44,7 +44,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                     Gift Cards
                 </a></li>
 
-                <li><a href="sell.php">
+                <li><a href="sellersignup.php">
                     Sell
                 </a></li>
                 

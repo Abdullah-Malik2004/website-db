@@ -1,0 +1,166 @@
+body
+{
+    background-color: #8490dd;
+    font-family: "Roboto", sans-serif;
+}
+
+.addproduct
+{
+    width: 30%;
+    display: flex;
+    
+    justify-content: center;
+    align-items: center;
+    margin: 100px auto; 
+    border: 3px solid black;
+    border-radius: 20px;
+}
+
+.product 
+{
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 600px;
+    background-color: #3f4992;
+    color: #171c24;
+    border-radius: 30px;
+    margin: 50px auto; 
+}
+
+/*
+background-color: #6370ce;
+    color: #171c24;
+    background-color: #3344c7;
+    padding-left: 10px;
+  
+background-color: #3f4992;
+    transition: 0.3s ease;
+background-color: #29369b;
+    transition: 0.3s ease;
+background-color: #0e1d8b;
+    transition: 0.3s ease;
+*/
+.addproduct form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.name {
+    margin-top: 20px;
+    display: flex;
+    align-items: center; /* Center the items vertically */
+}
+.name label 
+{
+    margin-right: 10px;
+    font-size: 20px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #3f4992;
+    color: #c2cbdd; 
+    font-weight: 600;
+    padding: 5px; 
+}
+
+.name input
+{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    height: 34px;
+
+    text-align: center;
+    font-size: 17px;
+
+    background-color: #4e59a7;
+    transition: 0.3s ease;
+    color: aliceblue;
+
+    border: none;
+    outline: none;
+}
+
+.name input:hover
+{
+    background-color: #2d346b;
+    transition: 0.3s ease;
+}
+.name input:focus
+{
+    background-color: #191f4d;
+    transition: 0.3s ease;
+}
+
+.name .file
+{
+    padding-left: 50px;
+    margin-top: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.submit
+{
+    transition: 0.3s ease;
+    background-color: #4e59a7;
+    color: #c2cbdd;
+    margin: 30px 0;
+    font-size: 20px;
+    width: 200px;
+    height: 50px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+
+    outline: none;
+    border: none;
+}
+.submit:hover
+{
+    background-color: #2d346b;
+    transition: 0.3s ease;
+    color: #375fb1;
+}
+.submit:focus
+{
+    background-color: #191f4d;
+    transition: 0.3s ease;
+}
+
+.in {
+    margin-top: 30px;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    cursor: pointer;
+    font-weight: 550;
+}
+
+input[type="file"] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.in label {
+    background-color: #214e8a;
+    color: #fff;
+    display: inline-block;
+    padding: 8px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+input[type="file"]:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+input[type="file"]:valid + label {
+    background-color: #394d7a;
+}
