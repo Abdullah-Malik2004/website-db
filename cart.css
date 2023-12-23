@@ -53,10 +53,19 @@ footer
     margin: 20px 30px;
 }
 
-.itemPicture img 
-{
-    padding-top: 45px;
-    padding-left: 30px;
-    width: 400px; /* Set the desired width */
-    height: auto; /* Automatically adjust height to maintain aspect ratio */
+.productContainer {
+    display: flex;
+    margin-bottom: 20px;
 }
+
+.price {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.checkbox {
+    flex: 1;
+}
+
+

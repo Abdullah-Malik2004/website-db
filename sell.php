@@ -11,7 +11,12 @@
         $image_data = $_FILES['image']['name'];
         $temp_name = $_FILES['image']['tmp_name'];
         $folder = $image_data;
-        
+        if(move_uploaded_file($temp_name,$folder)){
+            echo "File uploaded successfully";
+        }
+        else{
+            echo "File couldn't be uploaded";
+        }
         
         $stmt = $conn->prepare("SELECT categoryId from category WHERE categoryName = ?");
         $stmt->bind_param("s", $category);
@@ -94,9 +99,13 @@
                 <input type="text" id="stock" name="stock" required>
             </div>
 
-            <div class="name">
+            <div class="selection">
                 <label for="category">Category</label>
-                <input type="text" id="category" name="category" required>
+                <select name="category">
+                    <option value="games">Games</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                </select>
             </div>
 
             <div class="in">

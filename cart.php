@@ -1,3 +1,8 @@
+<?php
+include('database.php');
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +16,7 @@
     <link rel="icon" href="headerCOSMOS.png">
     <link rel="stylesheet" href="border.css">
     <link rel="stylesheet" href="cart.css">
+    
 </head>
 <body>
     <a href="main.php">
@@ -25,23 +31,44 @@
     <hr>
     <h1>CART</h1>
     <hr>
-    <div class="total"></div>
-    <script>
-        var totalAmount; 
 
-    
-        window.onload = function () {
-            reload();
-            // Access the total amount after the reload function
-            //totalAmount = calculateAndDisplayTotalAmount();
-            //console.log('Total Amount:', totalAmount);
-        };
+    <?php
 
-        
+    $cid = $_SESSION['cid'];
+    $sql = "SELECT * from product 
+    join cart on cart.productid = product.productid
+    join customer on customer.customerid= cart.customerid
+    where customer.customerid = $cid";
+    $result = $conn->query($sql);
 
+    if($result->num_rows>0){
 
-    </script>
-    <div class="itemPicture"></div>
+        while($row = $result->fetch_assoc()){
+
+            echo '<form id="CheckoutForm" action="checkout.php" method="post">';
+            echo '<div class="productContainer">';
+            echo '<div class="checkbox">';
+            echo '<input type="checkbox" name="productCheckbox[]" value="' . $row["ProductID"] . '">';
+            echo '</div>';
+            echo '<div class="itemPicture">';
+            echo '<img src="' . $row["image_data"] . '" alt="Product Image" style="width:400px; height:222px;"> ';
+            echo '</div>';
+            echo '<div class="price">';
+            echo '<p>Price: ' . $row["price"] . '</p>';
+            echo '<label for="quantity">Quantity:</label>';
+            echo '<input type="number" id="quantity" name="quantity['.$row['ProductID'].']" value="1" min="1">';
+            echo '</div>';
+            echo '</div>';
+        }
+        echo '<div>';
+        echo '<input type="submit" name="checkout" value="Checkout" > ';
+        echo '</div>';
+        echo '</form>';
+    }
+    else{
+        echo "Cart is empty";
+    }
+    ?>
 
     <footer class="copy" id="footer" >
         <p>&copy;  DBMS Project Fall 2023.
@@ -69,12 +96,21 @@
         }
     </style>
 
-    <script src="ncart.js">
-        
-        
-    </script>
-    
 </body>
 </html>
 
 
+<?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Check if product checkboxes are submitted
+        if (isset($_POST['productCheckbox']) && is_array($_POST['productCheckbox'])) {
+            // Loop through the array of product checkboxes
+            header("location:checkout.php");
+            exit();
+        } else {
+            echo "<script>
+            alert('No products selected for checkout.')
+            </script>";
+        }
+    }
+?>

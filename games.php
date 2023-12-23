@@ -96,6 +96,8 @@
 
     if($result->num_rows>0){
 
+        $index=0;
+
         while($row = $result->fetch_assoc()){
 
             echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="games.php">';
@@ -107,6 +109,7 @@
             echo '<h3 onclick="addToCart(' . $row['ProductID'] . ')">' . $row["Name"] . '</h3>';
             echo '<div class="cc">';
             echo '<input type="submit" name="action" value="' . $row['ProductID'] . '">Add To Cart';
+            echo '<input type="hidden" name="hidden_field[' . $index . ']" value="' . $row['ProductID'] . '">';
             echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(' . $row['ProductID'] . ')"></i>';
             echo '</div>';
             echo '</div>';
@@ -117,7 +120,7 @@
             echo '</div>'; // Close the div with class "f2"
             echo '</form>';
         
-        
+            $index++;
         }
         $totalPages = ceil($totalProducts / $productsPerPage);
        
