@@ -1,5 +1,6 @@
 <?php 
     include('database.php');
+    session_start();
     if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         header("location:signIn.php");
         exit;
@@ -39,25 +40,53 @@
     <h1>GAMES</h1>
     <hr>
 
-    <div class="f2 " >
-        <div class="assissin" id="assissin">
-        <img src="games/assasin.jpg" class="im" >
-        <div class="textcontainer">
-            <h3 onclick="addToCart('assissin', 'games/assasin.jpg')">Assassin's Creed</h3>
-            <div class="cc">
-                <h5 onclick="addToCart('assissin', 'games/assasin.jpg')">Add to Cart</h5>
-                <i class="fa-solid fa-cart-shopping" onclick="addToCart('assissin', 'games/assasin.jpg')"></i>
-            </div>
+    <?php
+
+        $productsPerPage = 4;
+
+        $totalProducts = 0;
+        $sql = "SELECT * from Product";
+
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+
+            $totalProducts++;
+
+        }
+
+        // Get the current page from the URL or set a default
+        $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+        // Calculate the offset for the SQL query
+        $offset = ($current_page - 1) * $productsPerPage;
+
+        // Query to retrieve products with pagination
+        $sql = "SELECT * FROM product LIMIT $offset, $productsPerPage";
+        $result = $conn->query($sql);
+
+    if($result->num_rows>0){
+
+        while($row = $result->fetch_assoc()){
+
+    echo '<div class="f2 " >';
+        echo '<div class="assissin" id="assissin">';
+        echo '<img src="' . $row["image_data"] . '" class="im" >';
+        echo'<div class="textcontainer">';
+            echo'<h3 onclick="addToCart("assissin", "games/assasin.jpg")">'.$row["Name"].'</h3>';
+            echo '<div class="cc">';
+                echo '<h5 onclick="addToCart("assissin", "games/assasin.jpg")">Add to Cart</h5>';
+                echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart("assissin", "games/assasin.jpg")"></i>';
+            echo '</div>
         </div>
         <div class="price">
-            <h4><br>$79.99</h4>
+            <h4><br>'.$row["price"].'</h4>
         </div>
-    </div>
+    </div>';
+        }
 
-    <script>
-      
-    </script>
-        
+    }
+       
+    ?>
 
         <div class="assissin">
             <img src="games/fc5.jpg" class="im">
