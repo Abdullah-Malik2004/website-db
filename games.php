@@ -8,7 +8,7 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $productid = $_POST['action'];
         $customerid = $_SESSION['cid'];
-        $quantity - $_POST['quantity'];
+        $quantity = $_POST['quantity'];
 
         $sql = "INSERT into cart values($customerid,$productid,$quantity)";
         $result = mysqli_query($conn,$sql);
@@ -101,6 +101,7 @@
 
         while($row = $result->fetch_assoc())
         {
+            echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="games.php">';
             echo '<div class="assissin" id="assissin">';
             echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px;  height: 372px;">';
             echo '<div class="textcontainer" id="' . $row['ProductID'] . '">';
@@ -121,6 +122,7 @@
             echo '</div>';
 
             echo '<hr>';
+            echo '</form>';
             $index++;
         }
         $totalPages = ceil($totalProducts / $productsPerPage);

@@ -46,9 +46,17 @@
                 $totalprice+=$price*$quantity;
                 $stmt->close();
 
-                echo' <img src="'.$image.'" style="width: 680px; height: 372px;" >';
-                echo"x $quantity<br>";
-                echo"Price = $lprice";
+                echo '<div style="display: flex; align-items: center;">';
+                echo '  <div style="margin-right: 20px;">';
+                echo '    <img src="' . $image . '" style="width: 400px; height: 222px;" >';
+                echo '  </div>';
+                echo '  <div>';
+                echo '    <p>' . $name . '</p>';
+                echo '    <p>' . $quantity . 'x</p>';
+                echo '    <p>Price = ' . $lprice . '</p>';
+                echo '  </div>';
+                echo '</div>';
+
 
                 $sql = "INSERT INTO temp_table (pid, name, quantity, image_data) VALUES
                 ($productId, '$name',$quantity, '$image')";
@@ -66,8 +74,8 @@
             </script>";
             exit();
         }
-        echo"Total price is $'.$totalprice'";
-        echo'<input type="submit" value="Place your order">';
+        echo'Total price is '.$totalprice.'<br>';
+        echo'<input type="submit" value="Place your order"><br>';
         echo'</form>';
     }
     else{

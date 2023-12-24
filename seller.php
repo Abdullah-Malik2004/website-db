@@ -47,10 +47,13 @@ if(!isset($_SESSION['sloggedin']) || $_SESSION['sloggedin']!=true){
             <li><a href="myproducts.php">
                     My Products
                 </a></li>
+
+            <li><a href="myorders.php">
+                    My Orders
+                </a></li>
         </ul>
     </div>
 </header>
-
 
 
 </body>
