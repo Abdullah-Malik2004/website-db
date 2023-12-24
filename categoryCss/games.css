@@ -6,10 +6,7 @@
     border: border-box;
 }
 
-.f2, .s2
-{
-    display: flex;
-}
+
 
 hr
 {
@@ -39,6 +36,7 @@ h1
 
 .assissin
 {
+    transition: 0.3s ease;
     cursor: pointer;
     margin: 20px 60px;
     position: relative; /* Added position relative */
@@ -47,13 +45,15 @@ h1
 
 .assissin:hover,
 .assissin:hover h1,
-.assissin:hover .fa-cart-shopping {
+.assissin:hover .fa-cart-shopping 
+{
     color: #FFC107;
     transition: 0.3s ease;
 }
 .textcontainer 
 {
-    margin-top: 10px;
+    margin: 10px auto;
+    width: 600px;
     display: flex;
     justify-content: space-around;
 }
@@ -80,9 +80,11 @@ h5
     margin-top: 10px;
     margin-right: 10px;
 }
+
 .price 
 {
-    
+    margin: 0 auto;
+    width: 700px;
     font-size: 27px;
     text-align: center;
     margin-top: -10px; /* Adjust the margin as needed */

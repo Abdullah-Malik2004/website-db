@@ -25,7 +25,7 @@
             
         }
 
-        header("location: games.php");
+        header("location: games.php?page=1");
         exit();
         
         

@@ -8,8 +8,9 @@
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $productid = $_POST['action'];
         $customerid = $_SESSION['cid'];
+        $quantity - $_POST['quantity'];
 
-        $sql = "INSERT into cart values($customerid,$productid,1)";
+        $sql = "INSERT into cart values($customerid,$productid,$quantity)";
         $result = mysqli_query($conn,$sql);
 
         if($result){
@@ -98,28 +99,28 @@
 
         $index=0;
 
-        while($row = $result->fetch_assoc()){
-
-            echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="games.php">';
-            echo '<div class="f2" >';
+        while($row = $result->fetch_assoc())
+        {
             echo '<div class="assissin" id="assissin">';
-            echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px; height: 372px;" >';
-            echo '<div class="textcontainer">';
-            //echo '<input type="submit" name="request_id" value="' . $row['ProductID'] . '">';
-            echo '<h3 onclick="addToCart(' . $row['ProductID'] . ')">' . $row["Name"] . '</h3>';
+            echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px;  height: 372px;">';
+            echo '<div class="textcontainer" id="' . $row['ProductID'] . '">';
+            echo '<h3 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">' . $row["Name"] . '</h3>';
             echo '<div class="cc">';
-            echo '<input type="submit" name="action" value="' . $row['ProductID'] . '">Add To Cart';
-            echo '<input type="hidden" name="hidden_field[' . $index . ']" value="' . $row['ProductID'] . '">';
-            echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(' . $row['ProductID'] . ')"></i>';
+            echo '<input type="submit" name="action" value="' . $row['ProductID'] . '">';
+            echo '<h5 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">Add to Cart</h5>';
+            echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)"></i>';
             echo '</div>';
             echo '</div>';
             echo '<div class="price">';
-            echo '<h4><br>' . $row["price"] . '</h4>';
+            echo '<div class="quan">';
+            echo '<h5 class="qtext">Quantity: </h5>';
+            echo '<input type="number" class="quantity" name="quantity" id="' . $row['ProductID'] . 'Quantity" value="1" min="1">';
             echo '</div>';
-            echo '</div>'; // Close the div with class "assissin"
-            echo '</div>'; // Close the div with class "f2"
-            echo '</form>';
-        
+            echo '<h4><br> $' . $row["price"] . '</h4>';
+            echo '</div>';
+            echo '</div>';
+
+            echo '<hr>';
             $index++;
         }
         $totalPages = ceil($totalProducts / $productsPerPage);
@@ -141,6 +142,81 @@
         
 
 
+<style>
+
+
+        /* line114 to 124 removes the arrows on the in side of 
+        quntity box*/
+
+        .quantity::-webkit-inner-spin-button,
+        .quantity::-webkit-outer-spin-button 
+        {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .quantity 
+        {
+            -moz-appearance: textfield;
+        }
+
+        .quantity 
+        {
+            margin-top: 30px;
+            font-size: 20px;
+            color: #2F4550;
+            font-weight: bolder;
+            text-align: center;
+            border: none;
+            outline: none;
+            background-color: #8490dd;
+            height: 40px;
+            width: 70px;
+            transition: 0.3s ease;
+            -moz-appearance: textfield;
+        }
+        .quantity:hover
+        {
+            background-color: #face4a;
+            transition: 0.3s ease;
+        }
+        .quantity:focus
+        {
+            background-color: #FFC107;
+        }
+
+
+        /*Quan and qtext are the div containing quantity box
+        and the "quantity" text */
+        .quan
+        {
+            display: flex;
+            justify-content: space-between;
+            width: 1px;
+        }
+        .qtext
+        {
+            margin-top: 35px;
+            font-size: 30px;
+        }
+
+
+
+        h5
+        {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        .price 
+        {
+            display: flex;
+            justify-content: space-around;
+            font-size: 27px;
+            text-align: center;
+            margin-top: -10px; /* Adjust the margin as needed */
+        }
+           
+    </style>
 
 
     

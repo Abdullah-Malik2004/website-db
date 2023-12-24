@@ -35,7 +35,7 @@ session_start();
     <?php
 
     $cid = $_SESSION['cid'];
-    $sql = "SELECT * from product 
+    $sql = "SELECT product.ProductID,product.image_data,product.price,cart.quantity from product 
     join cart on cart.productid = product.productid
     join customer on customer.customerid= cart.customerid
     where customer.customerid = $cid";
@@ -56,8 +56,9 @@ session_start();
             echo '<div class="price">';
             echo '<p>Price: ' . $row["price"] . '</p>';
             echo '<label for="quantity">Quantity:</label>';
-            echo '<input type="number" id="quantity" name="quantity['.$row['ProductID'].']" value="1" min="1">';
+            echo '<input type="number" id="quantity" name="quantity['.$row['ProductID'].']" value='.$row['quantity'].' min="1">';
             echo '</div>';
+            echo '<button id="deleteButton" onclick="deleteRecord(event, '.$row['ProductID'].')">Delete</button>';
             echo '</div>';
         }
         echo '<div>';
@@ -95,6 +96,26 @@ session_start();
             cursor: pointer;
         }
     </style>
+
+    <script>
+        
+        function deleteRecord(event,recordId) {
+            
+            event.preventDefault();
+            // Make an asynchronous HTTP request to the server
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "deletecart.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Handle the response from the server if needed
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send("id=" + recordId);
+            window.location.href = 'cart.php';
+        }
+    </script>
 
 </body>
 </html>

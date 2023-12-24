@@ -110,7 +110,13 @@
             transform: scale(1.5); /* Adjust the scale factor as needed */
             margin-right: 5px; /* Add some spacing between the circle and the label */
         }
-        
+        p
+        {
+            text-align: center;
+            margin-top: 300px;
+            font-size: 26px;
+            font-weight: 550;
+        }
     </style>
 </head>
 <body>
@@ -191,5 +197,3 @@ if (mysqli_num_rows($result) > 0)
 
 </body>
 </html>
-
-

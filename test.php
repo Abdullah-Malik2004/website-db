@@ -1,148 +1,157 @@
-<?php
-
-
-
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\Exception;
-
-    //Load Composer's autoloader
-    require 'phpmailer/src/Exception.php';
-    require 'phpmailer/src/PHPMailer.php';
-    require 'phpmailer/src/SMTP.php';
-
-    function sendemail_verify($fname,$lname,$email)
-    {
-        $mail = new PHPMailer(true);  
-        $mail->SMTPDebug = 1;              
-        $mail->isSMTP();                                    
-        $mail->Host       = 'smtp.example.com';   
-        $mail->SMTPAuth = true;                                                        
-        $mail->Username   = 'abdullahwaqar29august@gmail.com';                    
-        $mail->Password   = '@bdullah123';                              
-        $mail->SMTPSecure = "ssl";   
-        $mail->Port       = 587;                                   
-
-        //Recipients
-        $mail->setFrom('abdullahwaqar29august@gmail.com',$fname);
-        $mail->addAddress($email);     //Add a recipient
-        
-
-        $email_template = "
-            <h2>You have registered with COSMOS </h2>
-            <h5>Verify your email address to login using the link given below</h5>
-            <br/><br/>
-            <a href='http://localhost/websit/verify_email.php'>Click me</a> 
-        ";
-        
-
-        //Content
-        $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Email Verification from COSMOS';
-        $mail->Body    = $email_template;
-        
-
-        $mail->send();
-        
-    }
-    $email='abdullahwaqar29august@gmail.com';
-    $fname='Abdullah';
-    $lname='Waqar';
-    sendemail_verify("$fname","$lname","$email");
-
-    <?php
+<?php 
     include('database.php');
     session_start();
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $pname = filter_input(INPUT_POST,"name",FILTER_SANITIZE_SPECIAL_CHARS);
-        $desc = filter_input(INPUT_POST,"desc",FILTER_SANITIZE_SPECIAL_CHARS);
-        $price = filter_input(INPUT_POST,"price",FILTER_SANITIZE_SPECIAL_CHARS); 
-        $stock = filter_input(INPUT_POST,"stock",FILTER_SANITIZE_SPECIAL_CHARS);
-        $category = filter_input(INPUT_POST,"category",FILTER_SANITIZE_SPECIAL_CHARS);
-        $image_data = $_FILES['image']['name'];
-        $temp_name = $_FILES['image']['tmp_name'];
-        $folder = $image_data;
-        move_uploaded_file($temp_name,$folder);
-        
-        
-        $stmt = $conn->prepare("SELECT categoryId from category WHERE categoryName = ?");
-        $stmt->bind_param("s", $category);
-        $stmt->execute();
-        $stmt->bind_result($categoryid);
-    
-        if ($stmt->fetch()) {
-            $sellid=$_SESSION['fid'];
-            $stmt->close();
+    if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
+        header("location:signIn.php");
+        exit;
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $productid = $_POST['action'];
+        $customerid = $_SESSION['cid'];
+        $quantity = $_POST['quantity'];
+
+        $sql = "INSERT into cart values($customerid,$productid,$quantity)";
+        $result = mysqli_query($conn,$sql);
+
+        if($result){
             
-            $sql="INSERT INTO product (Name,description,price,StockQuantity,sellerId,categoryid,image_data) 
-            VALUES ('$pname','$desc',$price,$stock,$sellid,$categoryid,'$image_data')";
+            mysqli_query($conn, $sql);
             
-            if(mysqli_query($conn,$sql)){
-                echo"Product has been added";}
-            else{
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-        } 
+            echo "<script>
+             alert('Added to cart succesfully!')
+             window.location.href = 'games.php'
+              </script>";
+           
+        }
         else{
-            echo"Category not found";
-        }  
+            
+            echo "<script>
+            alert('Already added to cart')
+            window.location.href = 'games.php'
+            </script>";
+
+            
+            
+        }
+        
+
+        
         
         
     }
-    
-
-
-    mysqli_close($conn);
 ?>
-?>    
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>COSMOS-GAMES</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="headerCOSMOS.png">
+    <link rel="stylesheet" href="border.css">
+    <link rel="stylesheet" href="categoryCss/games.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <script src="newGames.js">
+    </script>
+
 </head>
-<body>
-    <div class="addproduct">
-        <form id="productForm" action="sell.php" method="post" enctype="multipart/form-data">
-            <h1>Add A Product</h1>
-
-            <div class="name">
-                <label for="name">Product Name</label>
-                <input type="text" id="name" name="name" required>
+<body class="body">
+    <a href="main.php">
+        <div class = 'logobar'>
+            <div class="logo-cover border_logo">
+                <div class="logo"></div>
             </div>
-            
-            <div class="description">
-                <label for="desc">Description</label>
-                <input type="text" id="desc" name="desc" required>
-            </div>
-
-            <div class="price">
-                <label for="price">Price</label>
-                <input type="text" id="price" name="price" required>
-            </div>
-
-            <div class="stock">
-                <label for="stock">Price</label>
-                <input type="text" id="stock" name="stock" required>
-            </div>
-
-            <div class="category">
-                <label for="category">Category</label>
-                <input type="text" id="category" name="category" required>
-            </div>
-
-            <div class="image">
-                <label for="image">Add Image (680x372)</label>
-            <input type="file" name="image" required>
-            </div>
-            
-            <input type="submit" value="Continue" >
-        </form>
-
+        </div>
+    </a>
         
-    </div>
+    <script>
+    </script>
+
+    <hr>
+    <h1>GAMES</h1>
+    <hr>
+
+    <?php
+
+        $productsPerPage = 4;
+
+        $totalProducts = 0;
+        $sql = "SELECT * from Product";
+
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+
+            $totalProducts++;
+
+        }
+
+        // Get the current page from the URL or set a default
+        $current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+        // Calculate the offset for the SQL query
+        $offset = ($current_page - 1) * $productsPerPage;
+
+        // Query to retrieve products with pagination
+        $sql = "SELECT * FROM product where categoryid=1 LIMIT $offset, $productsPerPage";
+        $result = $conn->query($sql);
+
+    if($result->num_rows>0){
+
+        $index=0;
+
+        while($row = $result->fetch_assoc()){
+
+            echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="games.php">';
+            echo '<div class="f2" >';
+            echo '<div class="assissin" id="assissin">';
+            echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px; height: 372px;" >';
+            echo '<div class="textcontainer">';
+            //echo '<input type="submit" name="request_id" value="' . $row['ProductID'] . '">';
+            echo '<h3 onclick="addToCart(' . $row['ProductID'] . ')">' . $row["Name"] . '</h3>';
+            echo '<div class="cc">';
+            echo '<input type="submit" name="action" value="' . $row['ProductID'] . '">Add To Cart';
+            echo '<input type="hidden" name="hidden_field[' . $index . ']" value="' . $row['ProductID'] . '">';
+            echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(' . $row['ProductID'] . ')"></i>';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="quan">';
+            echo '<h5 class="qtext">Quantity: </h5>';
+            echo '<input type="number" class="quantity" name="quantity" id="' . $row['ProductID'] . 'Quantity" value="1" min="1">';
+            echo '</div>';
+            echo '<div class="price">';
+            echo '<h4><br>' . $row["price"] . '</h4>';
+            echo '</div>';
+            echo '</div>'; // Close the div with class "assissin"
+            echo '</div>'; // Close the div with class "f2"
+            echo '</form>';
+        
+            $index++;
+        }
+        $totalPages = ceil($totalProducts / $productsPerPage);
+       
+    echo '<div class="pagination">';
+    for ($i = 1; $i <= $totalPages; $i++) {
+        echo '<a href="?page=' . $i . '" >' . $i . '</a>';
+    }
+    echo '</div>';
+
+    }
+
+    else{
+        echo'No products for this category';
+    }
+       
+    ?>
+    <footer class="copy" id="footer">
+        <p>&copy;  DBMS Project Fall 2023.
+        <br>
+        This is an intellectual property of Abdullah Waqar and Waqar Ahmed.
+        <br>
+        All rights reserved.  </p>
+    </footer>
 </body>
 </html>
