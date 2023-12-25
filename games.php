@@ -6,9 +6,10 @@
         exit;
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $productid = $_POST['action'];
+        $productid = $_POST['product_id'];
         $customerid = $_SESSION['cid'];
         $quantity = $_POST['quantity'];
+        
 
         $sql = "INSERT into cart values($customerid,$productid,$quantity)";
         $result = mysqli_query($conn,$sql);
@@ -107,7 +108,8 @@
             echo '<div class="textcontainer" id="' . $row['ProductID'] . '">';
             echo '<h3 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">' . $row["Name"] . '</h3>';
             echo '<div class="cc">';
-            echo '<input type="submit" name="action" value="' . $row['ProductID'] . '">';
+            echo '<input type="hidden" name="product_id" value="' . $row['ProductID'] . '">';
+            echo '<input type="submit" name="action" value="Add To Cart">';
             echo '<h5 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">Add to Cart</h5>';
             echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)"></i>';
             echo '</div>';
