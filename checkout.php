@@ -54,7 +54,7 @@
                 echo '  <div>';
                 echo '    <p>' . $name . '</p>';
                 echo '    <p>' . $quantity . 'x</p>';
-                echo '    <p>Price = ' . $lprice . '</p>';
+                echo '    <p>Price = $' . $lprice . '</p>';
                 echo '  </div>';
                 echo '</div>';
 
@@ -90,20 +90,25 @@
         
         echo '<label for="coupon">Select Coupon:</label><br>';
 
-
-        echo '<input type="radio" id="coupon10" name="coupon" value="coupon10">';
-        echo '<label for="coupon10">$10 Off</label><br>';
-
-        
-        // Radio button for $5 off
-        echo '<input type="radio" id="coupon5" name="coupon" value="coupon5">';
-        echo '<label for="coupon5">$5 Off</label><br>';
-
+        $cid = $_SESSION['cid'];
+        $sql= "SELECT c.couponid,co.image_data,co.dollarsoff from customercoupon c
+        join coupon co on co.couponid = c.couponid  where customerid = $cid";
+        $result = mysqli_query($conn,$sql);
+        if($result->num_rows>0){
+            while($row=$result->fetch_assoc()){
+                echo '<input type="radio" name="couponCheckbox[]" value="' . $row["dollarsoff"] . '" onclick="updateTotalPrice()">';
+                echo '</div>';
+                echo '<div class="itemPicture">';
+                echo '<img src="' . $row["image_data"] . '" alt="Product Image" style="width:400px; height:222px;"> ';
+                echo '</div>';
+                echo '<div class="price">';
+                echo '<p> $' . $row["dollarsoff"] . ' off</p>';
+            }
+        }
+        else{
+            echo"<label>No coupons available<br></label>";
+        }
         echo '<label for="paymentMethod">Select Payment Method:</label><br>';
-
-        // Radio button for Credit Card
-        echo '<input type="radio" id="creditCard" name="paymentMethod" value="creditCard">';
-        echo '<label for="creditCard">Credit Card</label><br>';
 
         // Radio button for PayPal
         echo '<input type="radio" id="payPal" name="paymentMethod" value="EasyPaisa">';
@@ -112,7 +117,9 @@
         echo '<input type="radio" id="creditCard" name="paymentMethod" value="CashOnDelivery">';
         echo '<label for="cod">Cash On Delivery</label><br>';
 
-        echo '<input type="submit" name="placeorder" value="Place Your Order" ';
+
+        echo '<label for="totalprice">The total price is $<span id="totalprice">' . $totalprice . '</span></label><br>';
+        echo '<input type="submit" value="Place Your Order" >';
 
         echo'</form>';
 
@@ -122,6 +129,26 @@
         exit();
     }
 ?>
+<script>
+function updateTotalPrice() {
+    // Get all selected checkboxes
+    const checkboxes = document.querySelectorAll('input[name="couponCheckbox[]"]:checked');
+
+    // Calculate the updated total price
+    let updatedTotalPrice = <?php echo $totalprice; ?>; // Set to your initial base price
+
+    checkboxes.forEach(checkbox => {
+        // Add or subtract the value of each selected coupon
+        updatedTotalPrice -= parseFloat(checkbox.value);
+        if(updatedTotalPrice<0){
+            updatedTotalPrice=0;
+        }
+    });
+
+    // Update the displayed total price
+    document.getElementById('totalprice').innerText = updatedTotalPrice.toFixed(2);
+}
+</script>
 </body>
 </html>
 

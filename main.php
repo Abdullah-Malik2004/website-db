@@ -40,8 +40,8 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                     Deals
                 </a></li>
 
-                <li><a href="cards.php">
-                    Gift Cards
+                <li><a href="getcoupons.php">
+                    Coupons
                 </a></li>
 
                 <li><a href="sellersignup.php">

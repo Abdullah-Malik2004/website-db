@@ -194,6 +194,8 @@
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $fname = filter_input(INPUT_POST,"fname",FILTER_SANITIZE_SPECIAL_CHARS);
         $lname = filter_input(INPUT_POST,"lname",FILTER_SANITIZE_SPECIAL_CHARS);
+        $dob = $_POST['dob'];
+
         $password = filter_input(INPUT_POST,"password",FILTER_SANITIZE_SPECIAL_CHARS); // This is the entered password
         // Hash the password using a secure hashing algorithm (e.g., bcrypt)
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -203,8 +205,8 @@
         
         
         
-        $sql="INSERT INTO customer (fname,lname,email,password,address,phoneno,age,verify_token) 
-        VALUES ('$fname','$lname','$email','$hashedPassword','A-354','$phone',19,'$verify_token')";
+        $sql="INSERT INTO customer (fname,lname,email,password,address,phoneno,DateOfBirth,verify_token) 
+        VALUES ('$fname','$lname','$email','$hashedPassword','A-354','$phone','$dob','$verify_token')";
 
         $result= mysqli_query($conn, $sql);
         

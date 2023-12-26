@@ -9,10 +9,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email= $_POST['email'];
     $password = $_POST['password'];
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
-    $stmt = $conn->prepare("SELECT CustomerID,fname,lname,password FROM customer WHERE email = ?");
+    $stmt = $conn->prepare("SELECT CustomerID,fname,lname,password,CosmoPoints FROM customer WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->bind_result($cid,$fname,$lname,$hashed_password);
+    $stmt->bind_result($cid,$fname,$lname,$hashed_password,$cpoints);
 
     if ($stmt->fetch()) {
         // User found, verify the password
@@ -25,6 +25,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $_SESSION['cid'] = $cid;
             $_SESSION['fname'] = $fname;
             $_SESSION['lname'] = $lname;
+            $_SESSION['cpoints'] = $cpoints;
             header("location: main.php");
             exit;
         } else {

@@ -107,6 +107,8 @@
                     <option value="games">Games</option>
                     <option value="electronics">Electronics</option>
                     <option value="clothing">Clothing</option>
+                    <option value="books">Books</option>
+                    <option value="Films">Films</option>
                 </select>
             </div>
 

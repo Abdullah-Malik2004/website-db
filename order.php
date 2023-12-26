@@ -52,7 +52,7 @@
         $sql = "DELETE FROM temp_table";
         mysqli_query($conn,$sql);
         echo"<script>
-        alert('Your order has been placed succesffully. Continue shopping')
+        alert('Your order has been placed succesfully. Continue shopping')
         window.location.href = 'main.php'
         </script>";
     }
