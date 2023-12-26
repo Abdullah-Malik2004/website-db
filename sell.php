@@ -12,7 +12,7 @@
         $temp_name = $_FILES['image']['tmp_name'];
         $folder = $image_data;
         if(move_uploaded_file($temp_name,$folder)){
-            echo "File uploaded successfully";
+            echo "";
         }
         else{
             echo "File couldn't be uploaded";
@@ -31,7 +31,9 @@
             VALUES ('$pname','$desc',$price,$stock,$sellid,$categoryid,'$image_data')";
             
             if(mysqli_query($conn,$sql)){
-                echo"Product has been added";}
+                echo"<script>
+                alert('Product has been added successfully')
+                </script>";}
             else{
                 echo "Error: " . $sql . "<br>" . $conn->error;
             }

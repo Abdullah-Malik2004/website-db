@@ -142,7 +142,7 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
             </div>
             <div class="T">
                 <img src="Template2.png"  >
-                <p>CLOTHINGS</p>
+                <p>CLOTHING</p>
             </div>
             <div class="T">
                 <img src="Template3.png"  >

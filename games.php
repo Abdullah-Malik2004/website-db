@@ -77,7 +77,7 @@
         $productsPerPage = 4;
 
         $totalProducts = 0;
-        $sql = "SELECT * from Product";
+        $sql = "SELECT * from Product where categoryid = 1";
 
         $result = $conn->query($sql);
         while ($row = $result->fetch_assoc()) {
@@ -93,7 +93,10 @@
         $offset = ($current_page - 1) * $productsPerPage;
 
         // Query to retrieve products with pagination
-        $sql = "SELECT * FROM product where categoryid=1 LIMIT $offset, $productsPerPage";
+        $sql = "SELECT p.ProductID,p.Name,p.StockQuantity,p.price,p.image_data,AVG(o.rating) from Product p
+        left join orders o on o.productid = p.productid
+        where p.categoryid = 1
+        group by p.ProductID,p.Name,p.StockQuantity,p.price,p.image_data LIMIT $offset, $productsPerPage";
         $result = $conn->query($sql);
 
     if($result->num_rows>0){
@@ -120,6 +123,11 @@
             echo '<input type="number" class="quantity" name="quantity" id="' . $row['ProductID'] . 'Quantity" value="1" min="1">';
             echo '</div>';
             echo '<h4><br> $' . $row["price"] . '</h4>';
+            
+            echo '</div>';
+            echo '<div class="stock">';
+            echo '<h4><br> '.$row['StockQuantity'].' left             ';
+            echo 'Rating:'.number_format($row['AVG(o.rating)'],2).'';
             echo '</div>';
             echo '</div>';
 

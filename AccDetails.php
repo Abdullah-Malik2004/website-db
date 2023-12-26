@@ -50,8 +50,8 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         <div class="both">
             <div class="pending">
             <ul>
-                <li class="pen" onclick="showPen()">Pendings</li>
-                <li class="pen" onclick="showRec()">Received</li>
+                <li class="pen" onclick="showPen()">Pending</li>
+                <li class="pen" onclick="showRec()">To Be Reviewed</li>
             </ul>
 
             </div>
@@ -69,11 +69,11 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
         }
         function showPen()
         {
-            
+            window.location.href= 'pendingorders.php';
         }
         function showRec()
         {
-
+            window.location.href= 'tobereviewed.php';
         }
     </script>
     

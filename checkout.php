@@ -1,5 +1,6 @@
 <?php
     include('database.php');
+    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -74,9 +75,47 @@
             </script>";
             exit();
         }
-        echo'Total price is '.$totalprice.'<br>';
-        echo'<input type="submit" value="Place your order"><br>';
+        $sql = "SELECT address from customer where customerid = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i",$_SESSION['cid']);
+        $stmt->execute();
+        $stmt->bind_result($address);
+        $stmt->fetch();
+        $stmt->close();
+
+        echo '<label for="address">Confirm you address:</label><br>';
+        echo '<textarea id="address" name="address" rows="4" cols="50">'.$address.'</textarea><br>';
+        
+       
+        
+        echo '<label for="coupon">Select Coupon:</label><br>';
+
+
+        echo '<input type="radio" id="coupon10" name="coupon" value="coupon10">';
+        echo '<label for="coupon10">$10 Off</label><br>';
+
+        
+        // Radio button for $5 off
+        echo '<input type="radio" id="coupon5" name="coupon" value="coupon5">';
+        echo '<label for="coupon5">$5 Off</label><br>';
+
+        echo '<label for="paymentMethod">Select Payment Method:</label><br>';
+
+        // Radio button for Credit Card
+        echo '<input type="radio" id="creditCard" name="paymentMethod" value="creditCard">';
+        echo '<label for="creditCard">Credit Card</label><br>';
+
+        // Radio button for PayPal
+        echo '<input type="radio" id="payPal" name="paymentMethod" value="EasyPaisa">';
+        echo '<label for="payPal">EasyPaisa</label><br>';
+
+        echo '<input type="radio" id="creditCard" name="paymentMethod" value="CashOnDelivery">';
+        echo '<label for="cod">Cash On Delivery</label><br>';
+
+        echo '<input type="submit" name="placeorder" value="Place Your Order" ';
+
         echo'</form>';
+
     }
     else{
         header("location:cart.php");

@@ -43,8 +43,8 @@ if(!isset($_SESSION['aloggedin']) || $_SESSION['aloggedin']!=true){
                     Requests
                 </a></li>
 
-                <li><a href="discount.php">
-                    Discounts
+                <li><a href="coupon.php">
+                    Add A Coupon
                 </a></li>
 
                 <li>
