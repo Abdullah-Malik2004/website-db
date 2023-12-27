@@ -1,0 +1,40 @@
+.entire .row p
+{
+    font-size: 25px;
+    font-weight: 550;
+    cursor: pointer;
+}
+
+/* Transition and styling for individual elements */
+.entire .row .this:hover {
+    transition: 0.3s ease;
+    color: #ebc963;
+}
+
+.entire .row .this {
+    transition: 0.3s ease;
+}
+
+.entire .row .this:hover + .this {
+    color: #ebc963;
+}
+
+
+.entire .row .this1:hover 
+{
+    color: #ebc963;
+    transition: 0.3s ease;
+}
+
+.entire .row .this2:hover 
+{
+    color: #ebc963;
+    transition: 0.3s ease;
+}
+
+.entire .row .this3:hover 
+{
+    color: #ebc963;
+    transition: 0.3s ease;
+}
+

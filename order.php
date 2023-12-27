@@ -46,6 +46,8 @@
                 $stmt->execute();
                 $stmt->close();
 
+                
+
 
                 $sql = "DELETE FROM cart 
                         WHERE customerid = ? AND productid = ?";

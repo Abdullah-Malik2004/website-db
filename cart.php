@@ -72,6 +72,7 @@ session_start();
         echo "Cart is empty";
     }
     ?>
+    
 
     <footer class="copy" id="footer" >
         <p>&copy;  DBMS Project Fall 2023.

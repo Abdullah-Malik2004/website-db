@@ -1,3 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="headerCOSMOS.png">
+    <link rel="stylesheet" href="border.css">
+    <link rel="stylesheet" href="seller.css">
+</head>
+<body>
+<a href="seller.php">
+        <div class='logobar'>
+            <div class="logo-cover border_logo">
+                <div class="logo"></div>
+            </div>
+        </div>
+    </a>
+</body>
+</html>
+<style>
+    body
+    {
+        
+        background-color: #446779;
+        
+    }
+    .center 
+    {
+        
+        margin-top: 200px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .center p 
+    {
+        font-size: 25px;
+        font-weight: 550;
+    }
+    .center a 
+    {
+        margin-top: 20px;
+        font-size: 20px;
+        font-weight: 550;
+    }
+</style>
 <?php
     include('database.php');
     session_start();
@@ -12,8 +62,10 @@
     
     $result = mysqli_query($conn,$sql);
 
+    
     if($result->num_rows>0){
-        while($row = $result->fetch_assoc()){
+        while($row = $result->fetch_assoc())
+        {
 
             echo '<form id="ChangeProductForm" action="myproducts.php" method="post">';
             echo '<div style="display: flex; align-items: center;">';
@@ -39,9 +91,13 @@
 
         }
     }
-    else{
-        echo 'You have no products. To add a product click the link below';
+    else
+    {
+        echo '<div class="center">';
+        echo '<p>You have no products. To add a product click the link below</p>';
+        
         echo '<a href="sell.php">Add A Product</a>';
+        echo "</div>";
     }
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $pid = $_POST['product_id'];
