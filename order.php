@@ -20,6 +20,7 @@
             $tprice = number_format($tprice, 2);
             echo $tprice;
             echo ''.$row['quantity'].'<br>';
+            $cpoints = floor($tprice/10);
 
             $sql = "INSERT into orders (customerid, productid, total_amount, status, quantity) 
                     Values (?, ?, ?, 'pending', ?)";
@@ -36,6 +37,15 @@
                 $stmt->bind_param("ii", $row['quantity'], $row['pid']);
                 $stmt->execute();
                 $stmt->close();
+
+                $sql = "UPDATE Customer
+                        SET CosmoPoints = CosmoPoints + ?
+                        WHERE CustomerID = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("ii", $cpoints, $cid);
+                $stmt->execute();
+                $stmt->close();
+
 
                 $sql = "DELETE FROM cart 
                         WHERE customerid = ? AND productid = ?";

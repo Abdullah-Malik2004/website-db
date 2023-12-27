@@ -158,7 +158,7 @@ if(!isset($_SESSION['aloggedin']) || $_SESSION['aloggedin']!=true){
         function openCategory(category) 
         {
             // Add logic to handle the click event for the specified category
-            var newPageURL = category +'.php';
+            var newPageURL = 'admin'+category +'.php';
             window.open(newPageURL,'_self');
             // You can replace the console.log with your desired action
             // For example, navigate to a specific page or display content related to the category

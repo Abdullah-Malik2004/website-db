@@ -33,6 +33,8 @@ session_start();
     <hr>
 
     <?php
+    $sql = "DELETE FROM temp_table";
+    mysqli_query($conn,$sql);
 
     $cid = $_SESSION['cid'];
     $sql = "SELECT product.ProductID,product.image_data,product.price,cart.quantity from product 

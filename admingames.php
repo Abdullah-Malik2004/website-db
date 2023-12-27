@@ -1,67 +1,20 @@
-<?php
-include('database.php');
-
-$productsPerPage = 4;
-
-$totalProducts = 0;
-$sql = "SELECT * from Product";
-
-$result = $conn->query($sql);
-while ($row = $result->fetch_assoc()) {
-
-    $totalProducts++;
-
-}
-
-// Get the current page from the URL or set a default
-$current_page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-
-// Calculate the offset for the SQL query
-$offset = ($current_page - 1) * $productsPerPage;
-
-// Query to retrieve products with pagination
-$sql = "SELECT * FROM product LIMIT $offset, $productsPerPage";
-$result = $conn->query($sql);
-
-// Check if there are rows in the result
-if ($result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        // Display product information in HTML
-        echo '<div class="product">';
-        echo '<img src="' . $row["image_data"] . '" alt="' . $row["Name"] . '">';
-        echo '<h3>' . $row["Name"] . '</h3>';
-        echo '<p>' . $row["Description"] . '</p>';
-        echo '<p>Price: $' . $row["price"] . '</p>';
-        echo '</div>';
-    }
- 
-    $totalPages = ceil($totalProducts / $productsPerPage);
-
-    echo '<div class="pagination">';
-    for ($i = 1; $i <= $totalPages; $i++) {
-        echo '<a href="?page=' . $i . '">' . $i . '</a>';
-    }
-    echo '</div>';
-} else {
-    echo "No products found.";
-}
-
-$conn->close();
-?>
-
 <?php 
     include('database.php');
     session_start();
-    if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
+    if(!isset($_SESSION['aloggedin']) || $_SESSION['aloggedin']!=true){
         header("location:signIn.php");
         exit;
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $productid = $_POST['action'];
-        $customerid = $_SESSION['cid'];
+        $productid = $_POST['product_id'];
+        
+        
 
-        $sql = "INSERT into cart values($customerid,$productid,1)";
+        $sql = "delete from orders where productid = $productid ";
+        $result = mysqli_query($conn,$sql);
+        $sql = "delete from cart where productid = $productid ";
+        $result = mysqli_query($conn,$sql);
+        $sql = "delete from product where productid = $productid ";
         $result = mysqli_query($conn,$sql);
 
         if($result){
@@ -69,14 +22,14 @@ $conn->close();
             mysqli_query($conn, $sql);
             
             echo "<script>
-             alert('Added to cart succesfully!')
+             alert('Product deleted successfully!')
               </script>";
            
         }
         else{
             
             echo "<script>
-            alert('Already added to cart')
+            alert('Product couldn't be deleted')
             </script>";
             
         }
@@ -127,7 +80,7 @@ $conn->close();
         $productsPerPage = 4;
 
         $totalProducts = 0;
-        $sql = "SELECT * from Product";
+        $sql = "SELECT * from Product where categoryid = 1";
 
         $result = $conn->query($sql);
         while ($row = $result->fetch_assoc()) {
@@ -143,7 +96,11 @@ $conn->close();
         $offset = ($current_page - 1) * $productsPerPage;
 
         // Query to retrieve products with pagination
-        $sql = "SELECT * FROM product where categoryid=1 LIMIT $offset, $productsPerPage";
+        $sql = "SELECT p.ProductID,p.Name,p.StockQuantity,p.price,p.image_data,AVG(o.rating),s.sellerid,s.fname,s.lname from Product p
+        join seller s on p.sellerid = s.sellerid
+        left join orders o on o.productid = p.productid
+        where p.categoryid = 1
+        group by p.ProductID,p.Name,p.StockQuantity,p.price,p.image_data LIMIT $offset, $productsPerPage";
         $result = $conn->query($sql);
 
     if($result->num_rows>0){
@@ -152,25 +109,28 @@ $conn->close();
 
         while($row = $result->fetch_assoc())
         {
+            echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="admingames.php">';
             echo '<div class="assissin" id="assissin">';
-            echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px  height: 372px">';
+            echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px;  height: 372px;">';
             echo '<div class="textcontainer" id="' . $row['ProductID'] . '">';
             echo '<h3 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">' . $row["Name"] . '</h3>';
             echo '<div class="cc">';
-            echo '<h5 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">Add to Cart</h5>';
-            echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)"></i>';
+            echo '<input type="hidden" name="product_id" value="' . $row['ProductID'] . '">';
+            echo '<input type="submit" name="action" value="Delete Product">';
             echo '</div>';
             echo '</div>';
             echo '<div class="price">';
-            echo '<div class="quan">';
-            echo '<h5 class="qtext">Quantity: </h5>';
-            echo '<input type="number" class="quantity" id="' . $row['ProductID'] . 'Quantity" value="1" min="1">';
-            echo '</div>';
             echo '<h4><br> $' . $row["price"] . '</h4>';
+            
+            echo '</div>';
+            echo '<div class="stock">';
+            echo '<h4><br>Seller:    '.$row['sellerid'].',             ';
+            echo ''.$row['fname'].' '.$row['lname'].'';
             echo '</div>';
             echo '</div>';
 
             echo '<hr>';
+            echo '</form>';
             $index++;
         }
         $totalPages = ceil($totalProducts / $productsPerPage);
