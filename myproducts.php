@@ -54,10 +54,10 @@
 
     $fid=$_SESSION['fid'];
 
-    $sql = "SELECT p.productid,p.name,p.price,p.stockquantity,p.rating,p.image_data,COUNT(orderid) from product as p
-    left join orders on p.productid = orders.productid
+    $sql = "SELECT p.productid,p.name,p.price,p.stockquantity,p.image_data,COUNT(o.orderid),AVG(o.rating) from product as p
+    left join orders o on p.productid = o.productid
     where p.sellerid = $fid
-    group by productid,name,price,stockquantity,rating,image_data";
+    group by productid,name,price,stockquantity,image_data";
 
     
     $result = mysqli_query($conn,$sql);
@@ -78,8 +78,8 @@
             echo '    <input type="number" class="stock" name="stock" id="' . $row['productid'] . 'Quantity" value="' . $row['stockquantity'] . '" min="1"><br>';
             echo '    <label for="' . $row['productid'] . 'Price">Price:</label>';
             echo '    <input type="number" class="price" name="price" id="' . $row['productid'] . 'Price" value="' . $row['price'] . '" step="0.01"><br>';
-            echo '    <label for="' . $row['productid'] . 'Orders">Number of Orders: '.$row['COUNT(orderid)'].'</label><br>';
-            echo '    <label for="' . $row['productid'] . 'Orders">Rating: '.$row['rating'].'</label>';
+            echo '    <label for="' . $row['productid'] . 'Orders">Number of Orders: '.$row['COUNT(o.orderid)'].'</label><br>';
+            echo '    <label for="' . $row['productid'] . 'Orders">Rating: '.number_format($row['AVG(o.rating)'],2).'</label>';
             echo '  </div>';
             echo '  <div>';
             echo '    <input type="hidden" name="product_id" value="' . $row['productid'] . '">';

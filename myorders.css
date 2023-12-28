@@ -1,0 +1,81 @@
+body 
+{
+    background-color: #8490dd;
+}
+
+#ChangeOrderForm
+{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.productName 
+{
+    font-weight: bold;
+    font-size: 25px;
+    color: #2F4550;
+}
+.selection .statusLabel 
+{
+    font-size: 23px;
+    margin-top: 40px;
+    font-weight: bold;
+    color: #2F4550;
+}
+
+.selection .statusSelect 
+{
+    font-size: 18px;
+    font-weight: bold;
+    color: #2F4550;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    text-align: center;
+    width: 150px;
+    padding: 5px;
+    appearance: none;
+    margin-top: 5px;
+    transition: 0.3s ease;
+    /* Add any additional styles as needed */
+}
+
+.selection .statusSelect:hover
+{
+    background-color: #FFC107;
+    border-radius: 5px;
+    transition: 0.3s ease;
+    color: #5e39e4;
+    cursor: pointer;
+}
+
+.statusSelect option 
+{
+    font-size: 14px;
+    background-color: #ffffff; /* Background color of each option */
+    border-radius: 50px;
+    color: #333; /* Text color of each option */
+    padding: 5px; /* Padding of each option */
+}
+
+#ChangeOrderForm input[type="submit"] 
+{
+    margin-top: 20px;
+    background-color: #4caf50; /* Green background color */
+    color: white; /* White text color */
+    padding: 10px 15px; /* Padding around the text */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Add some border-radius for rounded corners */
+    cursor: pointer; /* Add a pointer cursor on hover */
+  }
+  
+  #ChangeOrderForm input[type="submit"]:hover {
+    background-color: #45a049; /* Darker green color on hover */
+  }
+  
+
+.end
+{
+    height: 500px;
+    width: 100%;
+}

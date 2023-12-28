@@ -144,39 +144,53 @@ if(!isset($_SESSION['sloggedin']) || $_SESSION['sloggedin']!=true){
     $Rating;
     $sid = $_SESSION['fid'];
 
-$Q1 = 'SELECT COUNT(*) AS totalCount FROM orders;';
-$Q2 = 'SELECT P.Name, O.quantity FROM product AS P
+$Q1 = "SELECT COUNT(*) AS totalCount FROM orders
+        join product p on p.productid = orders.productid
+        where p.sellerid = ?";
+
+$stmt = $conn->prepare($Q1);
+$stmt->bind_param("i", $sid);
+$stmt->execute();
+$stmt->bind_result($total);
+$stmt->fetch();
+$stmt->close();
+
+
+
+$Q2 = 'SELECT P.Name, SUM(O.quantity) FROM product AS P
         JOIN orders AS O ON P.ProductID = O.ProductID
-        ORDER BY O.quantity DESC LIMIT 1;';
-$Q3 = 'SELECT P.Name, Q.categoryName FROM product AS P
-        JOIN category AS Q ON P.categoryID = Q.categoryID;';
-$Q4 = 'SELECT Name,rating from orders
-ORDER BY rating DESC LIMIT 1;';
+        where P.sellerid = ?
+        GROUP BY P.Name
+        ORDER BY SUM(O.quantity) DESC LIMIT 1;';
+$stmt = $conn->prepare($Q2);
+$stmt->bind_param("i", $sid);
+$stmt->execute();
+$stmt->bind_result($Mostbought,$numbought);
+$stmt->fetch();
+$stmt->close();
 
-if ($conn->multi_query($Q1 . $Q2 . $Q3 )) 
-{
-    do {
-        $result = $conn->store_result();
+$Q3 = 'SELECT Q.categoryName,COUNT(o.orderid) FROM product AS P
+        JOIN category AS Q ON P.categoryID = Q.categoryID
+        join orders o on o.productid = P.productid
+        GROUP BY Q.categoryName
+        ORDER BY COUNT(o.orderid) desc LIMIT 1';
+$stmt = $conn->prepare($Q3);
+$stmt->execute();
+$stmt->bind_result($MostboughtCategory,$catbought);
+$stmt->fetch();
+$stmt->close();
+$Q4 = 'SELECT p.Name,AVG(o.rating) from orders o
+join product p on o.productid = p.productid
+where P.sellerid = ?
+group by p.Name,p.productid
+ORDER BY AVG(o.rating) DESC LIMIT 1;';
+$stmt = $conn->prepare($Q4);
+$stmt->bind_param("i", $sid);
+$stmt->execute();
+$stmt->bind_result($toprated,$rating);
+$stmt->fetch();
+$stmt->close();
 
-        if ($result) 
-        {
-            $row = $result->fetch_assoc(); 
-            if ($row !== null && isset($row['totalCount'])) 
-                $total = $row['totalCount'];
-            else if (isset($row['Name'], $row['quantity'])) 
-            {
-                $Mostbought = $row['Name'];
-                $MostboughtQuantity = $row['quantity'];
-            } 
-            else if (isset($row['Name'], $row['categoryName'])) 
-                $MostboughtCategory = $row['categoryName'];
-            
-            
-            
-            $result->free();
-        }
-    } while ($conn->more_results() && $conn->next_result());
-}
 ?>
 
 
@@ -198,8 +212,8 @@ $(this).find('.additional-info').slideUp();: When you leave the .row, this finds
 
 <div class="entire">
     <div class="row">
-        <p>Your Best Item Selling: </p>
-        <p class="this"><?php echo $Mostbought; ?></p>
+        <p>Your Best Selling Item : </p>
+        <p class="this"><?php echo ''.$Mostbought.' ('.$numbought.' sold)'; ?></p>
         
     </div>
 
@@ -209,13 +223,13 @@ $(this).find('.additional-info').slideUp();: When you leave the .row, this finds
     </div>
     
     <div class="row">
-        <p class="this2">Your Best Selling Category: </p>
-        <p class="this2"><?php echo ucwords($MostboughtCategory); ?></p>
+        <p class="this2">Oerall Best Selling Category: </p>
+        <p class="this2"><?php echo ''.$MostboughtCategory.' ('.$catbought.' orders)'; ?></p>
     </div>
-    <!--<div class="row">
+    <div class="row">
         <p>Highest Rated Product:</p>
-        <p class="this3"><?php echo $Rating; ?></p>
-    </div>-->
+        <p class="this3"><?php echo ''.$toprated.' ('.number_format($rating,2).')'; ?></p>
+    </div>
 </div>
 
 

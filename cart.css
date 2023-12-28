@@ -43,15 +43,7 @@ footer
 }
 
 
-.itemPicture div 
-{
-    height: 300px;
-    width: 100%;
-    background-color: #03092b;
-    display: block;
-    text-align: left;
-    margin: 20px 30px;
-}
+
 
 .productContainer {
     display: flex;
@@ -68,4 +60,100 @@ footer
     flex: 1;
 }
 
+.productContainer
+{
+    width: 20px;
+    margin-top: 50px;
+    margin-left: 110px;
+}
+.productContainer .checkbox input[type="checkbox"] 
+{
+    
+    margin: 100px 40px;
+    width: 20px; /* Set the width as needed */
+    height: 20px; /* Set the height as needed */
+    /* Add any other styles you want to apply to the checkbox */
+}
 
+.quantity
+{
+    display: flex;
+    margin-top: 15px;
+}
+.price
+{
+    margin: 80px 50px 50px 50px;
+    display: inline;
+}
+.quantity input[type="number"] 
+{
+    appearance: none;
+    text-align: center;
+    font-size: 18px;
+    background-color: #8490dd;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s ease;
+}
+
+.quantity input[type="number"]:hover
+{
+    transition: 0.3s ease;
+    background-color: #FFC107;
+}
+
+/* WebKit browsers (Safari, Chrome) */
+.quantity input[type="number"]::-webkit-inner-spin-button,
+.quantity input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.quantity input[type="number"] {
+  -moz-appearance: textfield;
+}
+.quantity label
+{
+    margin-right: 20px;
+}
+
+#deleteButton 
+{
+    margin-top: 100px;
+    height: 70px;
+    transition: 0.3s ease;
+    background-color: #ff6347; /* Tomato color for the background */
+    color: #fff; /* White text color */
+    padding: 10px 15px; /* Padding around the text */
+    border: none; /* Remove the default button border */
+    border-radius: 5px; /* Add some border-radius for rounded corners */
+    cursor: pointer; /* Add a pointer cursor on hover */
+  }
+  
+  #deleteButton:hover 
+  {
+    transition: 0.3s ease;
+    background-color: #d63333; /* Darker red color on hover */
+  }
+
+#submit 
+{
+    margin-top: 60px;
+    margin-bottom: 60px;
+    height: 50px;
+    transition: 0.3s ease;
+    background-color: #4c5ed3; /* Tomato color for the background */
+    color: #fff; /* White text color */
+    padding: 10px 15px; /* Padding around the text */
+    border: none; /* Remove the default button border */
+    border-radius: 5px; /* Add some border-radius for rounded corners */
+    cursor: pointer; /* Add a pointer cursor on hover */
+  }
+  
+  #submit:hover 
+  {
+    transition: 0.3s ease;
+    background-color: #131e66; /* Darker red color on hover */
+  }

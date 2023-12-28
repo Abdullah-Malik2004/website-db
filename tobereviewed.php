@@ -11,6 +11,10 @@
     <link rel="icon" href="headerCOSMOS.png">
     <title>Pending Orders</title>
     <style>
+        body
+        {
+            background-color: #4c5ed3;
+        }
         .rating {
             display: flex;
             flex-direction: row-reverse;
@@ -25,6 +29,79 @@
         .star:hover,
         .star.active {
             color: gold;
+        }
+
+        
+        #RatingForm 
+        {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        img
+        {
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        #RatingForm label[for='name']
+        {
+            transition: 0.3s ease;
+            color: #03092b;
+            font-size: 25px;
+            font-weight: 550;
+        }
+        #RatingForm label[for='name']:hover
+        {
+            transition: 0.3s ease;
+            color: #FFC107;
+            font-size: 25px;
+            font-weight: 550;
+        }
+        .QP
+        {
+            margin-top: 20px;
+            color: #03092b;
+            font-size: 18px;
+            font-weight: 550;
+        }
+
+        .ratingsAndStar label[for="Review"] 
+        {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            color: #03092b;
+            font-size: 18px;
+            font-weight: 550;
+        }
+        .ratingsAndStar
+        {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #RatingForm input[name="yesnow"] 
+        {
+            transition: 0.3s ease;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            background-color: #03092b;
+            border-radius: 10px;
+            color: #FFC107;
+            cursor: pointer;
+            width: 150px;
+            height: 30px;
+            font-weight: 550;
+        }
+        #RatingForm input[name="yesnow"]:hover
+        {
+            transition: 0.3s ease;
+            background-color: #FFC107;
+            color: #03092b;
         }
     </style>
 </head>
