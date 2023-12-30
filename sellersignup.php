@@ -42,6 +42,11 @@
                     <input type="text" id="lname" name="lname">
                 </div>
 
+                <div class="CNIC">
+                    <label for="CNIC">CNIC</label>
+                    <input type="text" id="CNIC" name="CNIC">
+                </div>                
+
                 
 
                 <input type="submit" value="Next" onclick='checkName()'>
@@ -62,21 +67,40 @@
                     <input type="text" id="Phone" name="Phone" >
                 </div>
 
+                
+
 
                 <input type="submit" value="Next" onclick='checkEmail()' >
                 <input type="submit" value="Back" onclick='BackSec1()'>
                 
+            
+            </div>
+            
+            <div class="section3" style="display:none;">
+
+                <h3>Bussiness Information</h3>
+
+                <div class="BussinessName" id="BussinessName">
+                    <label for="BussinessName">Bussiness Name</label>
+                    <input type="text" id="bussinessName" name="BussinessName" >
+                </div>
+
+                <div class="BussinessType" id="BussinessType">
+                    <label for="BussinessType">Bussiness Type</label>
+                    <input type="text" id="bussinessType" name="BussinessType" >
+                </div>
 
 
+
+
+                <input type="submit" value="Next" onclick='checkBname()' >
+                <input type="submit" value="Back" onclick='BackSec2()'>
                 
-
             
             </div>
 
-            <div class="section3" style="display:none;">
+            <div class="section4" style="display:none;">
                 <h3>Account Information</h3>
-
-                
 
                 <div class="Password" >
                     <label for="Password">Password</label>
@@ -87,12 +111,9 @@
                     <label for="Password">Confirm Password</label>
                     <input type="password" id="passwordC" name="passwordC"` >
                 </div>
-                
-            
-
             
                 <input type="submit" value="Next" onclick = 'CheckPassword()'> 
-                <input type="submit" value="Back" onclick='BackSec2()'>
+                <input type="submit" value="Back" onclick='BackSec3()'>
   
             </div>
 
@@ -138,9 +159,7 @@
 
 
             if (allFieldsFilled) 
-            {
                 changesection(section1,section2);
-            } 
             else 
                 AlertF();
             
@@ -157,54 +176,93 @@
             Input[2] = document.getElementById("username").value;
             Input[3] = document.getElementById("Phone").value;
 
+
             if(Input[2] != "" && Input[3] != "")
                 allFieldsFilled2 = true;
 
             if (allFieldsFilled2) 
                 changesection(section2, section3);
-            else 
-                AlertF();
+            
         }
 
-        function CheckPassword(){
+        function checkBname() {
+    event.preventDefault();
+    var section3 = document.querySelector('.section3');
+    var section4 = document.querySelector('.section4');
+    var allFieldsFilled2 = false;
+
+    Input[4] = document.getElementById("bussinessName").value;
+    Input[5] = document.getElementById("bussinessType").value;
+
+    console.log("bussinessName:", Input[4]);
+    console.log("bussinessType:", Input[5]);
+
+    if (Input[4] != "" && Input[5] != "") {
+        allFieldsFilled2 = true;
+    }
+
+    if (allFieldsFilled2) {
+        changesection(section3, section4);
+    } 
+}
+
+        function CheckPassword()
+        {
             event.preventDefault();
 
             var password = document.getElementById("password").value;
             var confirmPassword = document.getElementById("passwordC").value;
 
-            
-
-            if (password !== "" && confirmPassword === password) {
+            if (password !== "" && confirmPassword === password) 
+            {
                 console.log(password.length);
-                if(password.length>=8){
+                if(password.length>=8)
                     document.getElementById('signupForm').submit();
-                }
-                else{
+                else
                     alert("The passwords must have 8 or more characters");
-                }
-            } else {
+                
+            } 
+            else 
+            {
                 console.log("Passwords do not match. Alerting user.");
                 alert("The passwords do not match");
             }
         }
 
-        function changesection(sectionFrom,sectionTo){
-            
+        function changesection(sectionFrom,sectionTo)
+        {
             sectionFrom.style.display='none';
             sectionTo.style.display='block';
-            
         }
-        function BackSec1(){
+        function BackSec1()
+        {
             event.preventDefault();
             var section1 = document.querySelector('.section1');
             var section2 = document.querySelector('.section2');
             changesection(section2,section1);
         }
-        function BackSec2(){
+        function BackSec2()
+        {
             event.preventDefault();
             var section2 = document.querySelector('.section2');
             var section3 = document.querySelector('.section3');
             changesection(section3,section2);
+        }
+        function BackSec3()
+        {
+            event.preventDefault();
+            var section3 = document.querySelector('.section3');
+            var section4 = document.querySelector('.section4');
+            changesection(section4,section3);
+        }
+
+        function BackSec4()
+        {
+            alert(43);
+            event.preventDefault();
+            var section3 = document.querySelector('.section3');
+            var section4 = document.querySelector('.section4');
+            changesection(section4,section3);
         }
         function AlertF()
         {
@@ -224,10 +282,13 @@
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $email = filter_input(INPUT_POST,"username",FILTER_SANITIZE_SPECIAL_CHARS);
         $phone = filter_input(INPUT_POST,"Phone",FILTER_SANITIZE_SPECIAL_CHARS);
+        $businessname = filter_input(INPUT_POST,"BussinessName",FILTER_SANITIZE_SPECIAL_CHARS);
+        $businesstype = filter_input(INPUT_POST,"BussinessType",FILTER_SANITIZE_SPECIAL_CHARS);
+        $cnic = filter_input(INPUT_POST,"CNIC",FILTER_SANITIZE_SPECIAL_CHARS);
         
     
-        $sql="INSERT INTO seller (fname,lname,email,password,address,phoneno) 
-        VALUES ('$fname','$lname','$email','$hashedPassword','A-354','$phone')";
+        $sql="INSERT INTO seller (fname,lname,email,password,address,phoneno,business_name,business_type,cnic) 
+        VALUES ('$fname','$lname','$email','$hashedPassword','A-354','$phone','$businessname','$businesstype','$cnic')";
         
         if(mysqli_query($conn, $sql)){
             echo"<script>

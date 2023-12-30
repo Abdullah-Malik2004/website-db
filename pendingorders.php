@@ -49,4 +49,54 @@
     ?>
     
 </body>
+<style>
+        *{
+            font-family: "Roboto", sans-serif;
+        }
+        body
+        {
+            background-color: #737880;
+        }
+        .copy
+        {
+            bottom: 0;
+            display: flex;
+            text-align: center;
+            color: #737880;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+            background-color: #03092b;
+            height: 80px;
+            width: 100%;
+        }
+        .content 
+        {
+            margin-top: 50px;
+            display: inline;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        img
+        {
+            margin-top: 60px;
+            margin-bottom: 20px;
+        } 
+        .labelName
+        {
+            margin-top: 20px;
+            color: #03092b;
+            font-size: 18px;
+            font-weight: 550;
+        }
+
+        label[for="name"]
+        {
+            margin-top: 20px;
+            color: #03092b;
+            font-size: 30px;
+            font-weight: 600;
+        }
+    </style>
 </html>

@@ -46,7 +46,121 @@
                 <button type="button" onclick="see()">Next</button>
             </div>
             -->
-            
+            <script>
+    var Input = []; 
+var items; 
+
+function checkName() 
+{
+    event.preventDefault();
+    var allFieldsFilled = false;
+    var section1 = document.querySelector('.section1');
+    var section2 = document.querySelector('.section2');
+
+    Input[0] = document.getElementById("fname").value;
+    Input[1] = document.getElementById("lname").value;
+    Input[2] = document.getElementById("dob").value;
+
+    if(Input[0] != "" && Input[1] != "" && Input[2] != "")
+        allFieldsFilled = true;
+
+
+    if (allFieldsFilled) 
+    {
+        changesection(section1,section2);
+    } 
+    else 
+        AlertF();
+    
+}
+
+
+function checkEmail()
+{
+    event.preventDefault();
+    var section2 = document.querySelector('.section2');
+    var section3 = document.querySelector('.section3');
+    var allFieldsFilled2 = false;
+
+    Input[3] = document.getElementById("username").value;
+    Input[4] = document.getElementById("Phone").value;
+
+    if(Input[3] != "" && Input[4] != "")
+        allFieldsFilled2 = true;
+
+    if (allFieldsFilled2) 
+        changesection(section2, section3);
+    else 
+        AlertF();
+}
+
+function checkAdd()
+{
+    event.preventDefault();
+    var Address = document.getElementById("address").value;
+
+    var section4 = document.querySelector('.section4');
+    var section3 = document.querySelector('.section3');
+    
+    if(Address != "")
+        changesection(section3, section4);
+    else{
+        alert("Enter your address");
+    }
+        
+}
+
+function CheckPassword()
+{
+    event.preventDefault();
+
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("passwordC").value;
+
+    
+
+    if (password !== "" && confirmPassword === password) 
+    {
+        
+        if(password.length>=8)
+            document.getElementById('signupForm').submit();
+        else
+            alert("The passwords must have 8 or more characters");
+    } 
+    else 
+        alert("The passwords do not match");
+}
+
+function changesection(sectionFrom,sectionTo)
+{
+    sectionFrom.style.display='none';
+    sectionTo.style.display='block';
+    
+}
+function BackSec1(){
+    event.preventDefault();
+    var section1 = document.querySelector('.section1');
+    var section2 = document.querySelector('.section2');
+    changesection(section2,section1);
+}
+function BackSec2(){
+    event.preventDefault();
+    var section2 = document.querySelector('.section2');
+    var section3 = document.querySelector('.section3');
+    changesection(section3,section2);
+}
+
+function BackSec3(){
+    event.preventDefault();
+    var section3 = document.querySelector('.section3');
+    var section4 = document.querySelector('.section4');
+    changesection(section4,section3);
+}
+function AlertF()
+{
+    alert("Please fill in all the boxes");
+}
+</script>
 
             
             <div class="section1">
@@ -90,18 +204,26 @@
 
                 <input type="submit" value="Next" onclick='checkEmail()' >
                 <input type="submit" value="Back" onclick='BackSec1()'>
+            </div>
+
+            <div class="section3" style="display:none; margin-bottom: 30px;">
+
+                <h3>Personal Information</h3>
+
+                <div class="address" id="address">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="4" cols="30"></textarea>
+                </div>
+
+
+                <input type="submit" value="Next" onclick='checkAdd()' >
+                <input type="submit" value="Back" onclick='BackSec2()'>
                 
-
-
-                
-
             
             </div>
 
-            <div class="section3" style="display:none;">
+            <div class="section4" style="display:none;">
                 <h3>Account Information</h3>
-
-                
 
                 <div class="Password" >
                     <label for="Password">Password</label>
@@ -112,26 +234,12 @@
                     <label for="Password">Confirm Password</label>
                     <input type="password" id="passwordC" name="passwordC"` >
                 </div>
-                
-            
 
-            
                 <input type="submit" value="Next" onclick = 'CheckPassword()'> 
-                <input type="submit" value="Back" onclick='BackSec2()'>
+                <input type="submit" value="Back" onclick='BackSec3()'>
   
             </div>
             
-                
-            
-            
-            
-            
-            
-            
-            
-            <!--
-                <input type="submit" value="Sign Up">
-            -->
 
         </form>
     </div>
@@ -201,12 +309,13 @@
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
         $email = filter_input(INPUT_POST,"username",FILTER_SANITIZE_SPECIAL_CHARS);
         $phone = filter_input(INPUT_POST,"Phone",FILTER_SANITIZE_SPECIAL_CHARS);
+        $address = filter_input(INPUT_POST,"address",FILTER_SANITIZE_SPECIAL_CHARS);
         $verify_token=md5(rand());
         
         
         
         $sql="INSERT INTO customer (fname,lname,email,password,address,phoneno,DateOfBirth,verify_token) 
-        VALUES ('$fname','$lname','$email','$hashedPassword','A-354','$phone','$dob','$verify_token')";
+        VALUES ('$fname','$lname','$email','$hashedPassword','$address','$phone','$dob','$verify_token')";
 
         $result= mysqli_query($conn, $sql);
         
@@ -235,3 +344,4 @@
 
     mysqli_close($conn);
 ?>
+

@@ -223,7 +223,7 @@ $(this).find('.additional-info').slideUp();: When you leave the .row, this finds
     </div>
     
     <div class="row">
-        <p class="this2">Oerall Best Selling Category: </p>
+        <p class="this2">Overall Best Selling Category: </p>
         <p class="this2"><?php echo ''.$MostboughtCategory.' ('.$catbought.' orders)'; ?></p>
     </div>
     <div class="row">
@@ -232,10 +232,52 @@ $(this).find('.additional-info').slideUp();: When you leave the .row, this finds
     </div>
 </div>
 
-
+<div class="logout">
+    <input type="submit" value="Logout" onclick='logout()'>
+</div>
 
 
 </body>
+<style>
+    input
+{
+    margin: 100px auto;
+    display: block;
+    border-radius: 100px;
+    transition: 0.3s ease;
+    background-color: #5356f0;
+    border: none;
+    width: 250px;
+    height: 50px;
+    padding: 7px;
+    border-radius: 6px;
+    outline: none;
+    color: #382e2e; /* Set the text color */
+    font-family: Arial, sans-serif; /* Set the font family */
+    font-size: 20px; 
+    font-weight: 800;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+input:hover
+{
+    background-color: #e96359;
+    transition: 0.3s ease;
+}
+
+input:focus
+{
+    background-color: #e73629;
+    transition: 0.3s ease;
+}
+</style>
+<script>
+    function logout()
+    {
+        window.location.href = 'sellersignin.php';
+    }
+</script>
 <footer class="copy" id="footer">
     <p>&copy;  DBMS Project Fall 2023.
     <br>
