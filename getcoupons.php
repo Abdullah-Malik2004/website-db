@@ -33,11 +33,11 @@
                 </script>";
             }
             else{
-                echo "Error: " . mysqli_error($conn);
-                /*echo"<script>
+                
+                echo"<script>
                 alert('You already own this coupon.')
                 window.location.href='getcoupons.php'
-                </script>";*/
+                </script>";
             }
         }
 

@@ -64,7 +64,7 @@
 
                     
                     $sql = "SELECT orderid from orders
-                            order by orderid limit 1";
+                            order by orderid desc limit 1";
                     $stmt = $conn->prepare($sql);
                     $stmt->execute();
                     $stmt->bind_result($orderid);
