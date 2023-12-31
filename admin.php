@@ -48,8 +48,8 @@ if(!isset($_SESSION['aloggedin']) || $_SESSION['aloggedin']!=true){
                 </a></li>
 
                 <li>
-                    <a href="AccDetails.php">
-                        Change it and 1st line
+                    <a href="logout.php">
+                        Logout
                         <?php //echo $_SESSION['fname'],' ', $_SESSION['lname'] ?>
                     </a>
                 </li>

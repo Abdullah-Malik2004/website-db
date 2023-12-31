@@ -77,6 +77,7 @@
         margin-bottom: 30px;
     }
 
+
     .payment 
     {
         
@@ -251,15 +252,15 @@ Placeholder data for coupons  line number 138-->
             }
         }
         else{
-            echo"<label>No coupons available<br></label>";
+            echo"<label> No coupons available<br></label>";
         }
         echo '<label for="paymentLabel">Select Payment Method</label>';
         echo '<hr>';
         echo '<div class="payment">';
-        echo '<input type="radio" id="payPal" name="paymentMethod" value="EasyPaisa">';
+        echo '<input type="radio" id="payPal" name="paymentMethod" value="EasyPaisa" required>';
         echo '<label for="payPal">EasyPaisa</label><br>';
 
-        echo '<input type="radio" id="creditCard" name="paymentMethod" value="CashOnDelivery">';
+        echo '<input type="radio" id="creditCard" name="paymentMethod" value="Cash On Delivery" required>';
         echo '<label for="cod">Cash On Delivery</label><br>';
 
 

@@ -1,17 +1,20 @@
 <?php 
     include('database.php');
     session_start();
-    if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
+    if(!isset($_SESSION['aloggedin']) || $_SESSION['aloggedin']!=true){
         header("location:signIn.php");
         exit;
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $productid = $_POST['product_id'];
-        $customerid = $_SESSION['cid'];
-        $quantity = $_POST['quantity'];
+        
         
 
-        $sql = "INSERT into cart values($customerid,$productid,$quantity)";
+        $sql = "delete from orders where productid = $productid ";
+        $result = mysqli_query($conn,$sql);
+        $sql = "delete from cart where productid = $productid ";
+        $result = mysqli_query($conn,$sql);
+        $sql = "delete from product where productid = $productid ";
         $result = mysqli_query($conn,$sql);
 
         if($result){
@@ -19,14 +22,14 @@
             mysqli_query($conn, $sql);
             
             echo "<script>
-             alert('Added to cart succesfully!')
+             alert('Product deleted successfully!')
               </script>";
            
         }
         else{
             
             echo "<script>
-            alert('Already added to cart')
+            alert('Product couldn't be deleted')
             </script>";
             
         }
@@ -43,7 +46,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COSMOS-FOOD</title>
+    <title>COSMOS-FILMS</title>
     <link rel="stylesheet" href="main.css">
     <link rel="icon" href="headerCOSMOS.png">
     <link rel="stylesheet" href="border.css">
@@ -69,7 +72,7 @@
     </script>
 
     <hr>
-    <h1>FOOD</h1>
+    <h1>FILMS</h1>
     <hr>
 
     <?php
@@ -77,7 +80,7 @@
         $productsPerPage = 4;
 
         $totalProducts = 0;
-        $sql = "SELECT * from Product where categoryid = 6";
+        $sql = "SELECT * from Product where categoryid = 5";
 
         $result = $conn->query($sql);
         while ($row = $result->fetch_assoc()) {
@@ -93,9 +96,10 @@
         $offset = ($current_page - 1) * $productsPerPage;
 
         // Query to retrieve products with pagination
-        $sql = "SELECT p.ProductID,p.Name,p.StockQuantity,p.price,p.image_data,AVG(o.rating) from Product p
+        $sql = "SELECT p.ProductID,p.Name,p.StockQuantity,p.price,p.image_data,AVG(o.rating),s.sellerid,s.fname,s.lname from Product p
+        join seller s on p.sellerid = s.sellerid
         left join orders o on o.productid = p.productid
-        where p.categoryid = 6
+        where p.categoryid = 5
         group by p.ProductID,p.Name,p.StockQuantity,p.price,p.image_data LIMIT $offset, $productsPerPage";
         $result = $conn->query($sql);
 
@@ -105,29 +109,23 @@
 
         while($row = $result->fetch_assoc())
         {
-            echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="games.php">';
+            echo '<form id="AddToCartForm' . $row['ProductID'] . '" method="post" action="admingames.php">';
             echo '<div class="assissin" id="assissin">';
             echo '<img src="' . $row["image_data"] . '" class="im" style="width: 680px;  height: 372px;">';
             echo '<div class="textcontainer" id="' . $row['ProductID'] . '">';
             echo '<h3 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">' . $row["Name"] . '</h3>';
             echo '<div class="cc">';
             echo '<input type="hidden" name="product_id" value="' . $row['ProductID'] . '">';
-            echo '<input type="submit" name="action" value="Add To Cart">';
-            echo '<h5 onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)">Add to Cart</h5>';
-            echo '<i class="fa-solid fa-cart-shopping" onclick="addToCart(\'' . $row['ProductID'] . '\', \'' . $row["image_data"] . '\', document.getElementById(\'' . $row['ProductID'] . 'Quantity\').value)"></i>';
+            echo '<input type="submit" name="action" value="Delete Product">';
             echo '</div>';
             echo '</div>';
             echo '<div class="price">';
-            echo '<div class="quan">';
-            echo '<h5 class="qtext">Quantity: </h5>';
-            echo '<input type="number" class="quantity" name="quantity" id="' . $row['ProductID'] . 'Quantity" value="1" min="1">';
-            echo '</div>';
             echo '<h4><br> $' . $row["price"] . '</h4>';
             
             echo '</div>';
             echo '<div class="stock">';
-            echo '<h4><br> '.$row['StockQuantity'].' left             ';
-            echo 'Rating:'.number_format($row['AVG(o.rating)'],2).'';
+            echo '<h4><br>Seller:    '.$row['sellerid'].',             ';
+            echo ''.$row['fname'].' '.$row['lname'].'';
             echo '</div>';
             echo '</div>';
 

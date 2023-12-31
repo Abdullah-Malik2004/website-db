@@ -36,9 +36,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
                     Home
                 </a></li>
 
-                <li><a href="deals.php">
-                    Deals
-                </a></li>
 
                 <li><a href="getcoupons.php">
                     Coupons
@@ -46,10 +43,6 @@ if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!=true){
 
                 <li><a href="sellersignup.php">
                     Sell
-                </a></li>
-                
-                <li><a href="returns.php">
-                    Returns
                 </a></li>
 
                 <li>
