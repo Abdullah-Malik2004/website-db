@@ -11,8 +11,14 @@
         $stmt->bind_result($price);
         $stmt->fetch();
         $stmt->close();
+        $stmt = $conn->prepare("SELECT cosmopoints from customer where customerid = ?");
+        $stmt->bind_param("i",$_SESSION['cid']);
+        $stmt->execute();
+        $stmt->bind_result($cpoints);
+        $stmt->fetch();
+        $stmt->close();
         echo $price;
-        if($price>$_SESSION['cpoints']){
+        if($price>$cpoints){
             echo"<script>
             alert('You dont have enough CosmoPoints')
             window.location.href='getcoupons.php'
